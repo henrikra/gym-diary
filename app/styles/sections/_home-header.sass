@@ -1,0 +1,28 @@
+.home-header
+	height: 500px
+	background: 
+		image: url('../images/home-header-bg.jpg')
+		size: cover
+		repeat: no-repeat
+		position: center center
+	text-align: right
+
+	&--container
+		@extend .vertical-align
+		
+	&--heading
+		color: #fff
+		text-transform: uppercase
+		margin-top: 0
+		font-size: 42px
+
+@media (max-width: 767px)
+	.home-header
+		height: 320px
+		background:
+			position: right
+		text-align: center
+
+		&--welcome-container
+			background: rgba(#000, 0.7)
+			padding: 10px 15px 5px

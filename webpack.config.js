@@ -43,7 +43,7 @@ module.exports = {
       test: /\.sass$/,
       loader: 'style!css!sass'
     }, {
-        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.(png|jpg|jpeg|gif)$/,
         loader: 'url-loader'
     }]
   },

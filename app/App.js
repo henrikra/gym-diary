@@ -21,10 +21,8 @@ export default class App extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <div className="container">
-          {this.props.children}
-        </div>
-        <footer>
+        {this.props.children}
+        <footer className="footer">
           <div className="container">Copyright Henrik</div>
         </footer>
       </div>

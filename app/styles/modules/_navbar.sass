@@ -1,11 +1,12 @@
 .navbar
 	background: #fff
+	margin: 0
 
 	.navbar-nav > li > a
 		color: #939393
 		padding: 30px 20px
 
-		&:hover
+		&:hover, &:focus
 			color: $dark-text-color
 
 	.navbar-brand
@@ -13,6 +14,9 @@
 		color: $dark-text-color
 		font-weight: 600
 		text-transform: uppercase
+
+		&:hover
+			color: $dark-text-color
 
 @media (max-width: 767px)
 	.navbar
