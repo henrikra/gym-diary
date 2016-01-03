@@ -40,8 +40,14 @@ module.exports = {
       test: /\.css$/,
       loader: 'style!css'
     }, {
+      test: /\.sass$/,
+      loader: 'style!css!sass'
+    }, {
         test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
         loader: 'url-loader'
     }]
+  },
+  sassLoader: {
+    indentedSyntax: true
   }
 };
