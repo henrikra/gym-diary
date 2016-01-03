@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, MenuItem } from 'react-bootstrap';
 
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
-require('./styles/modules/navbar.sass');
+require('./styles/style.sass');
 
 export default class App extends Component {
   render() {

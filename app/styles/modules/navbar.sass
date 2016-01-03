@@ -1,2 +1,32 @@
 .navbar
-	// background: red
+	background: #fff
+
+	.navbar-nav > li > a
+		color: #939393
+		padding: 30px 20px
+
+		&:hover
+			color: $dark-text-color
+
+	.navbar-brand
+		padding: 30px 15px
+		color: $dark-text-color
+		font-weight: 600
+		text-transform: uppercase
+
+@media (max-width: 767px)
+	.navbar
+		.navbar-nav > li > a
+			padding: 15px
+
+		.navbar-brand
+			padding: 15px
+
+		.navbar-toggle
+			border: 0
+
+			.icon-bar
+				background: $dark-text-color
+
+			&:hover, &:focus
+				background: transparent
