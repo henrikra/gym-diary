@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 export default class Home extends Component {
 	render() {
@@ -22,21 +22,21 @@ export default class Home extends Component {
 						<div className="row">
 							<div className="col-sm-4">
 								<div className="feature">
-									<span className="feature--icon glyphicon glyphicon-phone" aria-hidden="true"></span>
+									<Glyphicon className="feature--icon" glyph="phone" />
 									<h3 className="feature--heading">Mobile</h3>
 									<p className="feature--description">Laboris ex. Est facilisis molestie. Inceptos eros cillum. Commodo iaculis. Veniam viverra. Malesuada penatibus aptent.</p>
 								</div>
 							</div>
 							<div className="col-sm-4">
 								<div className="feature">
-									<span className="feature--icon glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<Glyphicon className="feature--icon" glyph="ok" />
 									<h3 className="feature--heading">Consistent</h3>
 									<p className="feature--description">Laboris ex. Est facilisis molestie. Inceptos eros cillum. Commodo iaculis. Veniam viverra. Malesuada penatibus aptent.</p>
 								</div>
 							</div>
 							<div className="col-sm-4">
 								<div className="feature">
-									<span className="feature--icon glyphicon glyphicon-stats" aria-hidden="true"></span>
+									<Glyphicon className="feature--icon" glyph="stats" />
 									<h3 className="feature--heading">Insightful</h3>
 									<p className="feature--description">Laboris ex. Est facilisis molestie. Inceptos eros cillum. Commodo iaculis. Veniam viverra. Malesuada penatibus aptent.</p>
 								</div>
