@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 export default class Programs extends Component {
+	state = {
+		programs: []
+	}
+	componentDidMount(){
+		$.get('/programs', (results) => {
+			this.setState({
+				programs: results
+			});
+		});
+	}
 	render() {
+		var programs = this.state.programs.map(function(program) {
+			return (
+				<tr key={program._id}>
+				  <td>{program.name}</td>
+				  <td>3.1.2016</td>
+				</tr>
+			);
+		});
 		return (
 			<div className="container">
 				<div className="main-content">
@@ -15,14 +34,7 @@ export default class Programs extends Component {
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-								  <td>Golden Six</td>
-								  <td>3.1.2016</td>
-								</tr>
-								<tr>
-								  <td>Starting strength</td>
-								  <td>13.9.2015</td>
-								</tr>
+								{programs}
 							</tbody>
 						</table> 
 					</div>

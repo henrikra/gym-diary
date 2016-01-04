@@ -6,9 +6,20 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
 
+import mongo from 'mongodb';
+import monk from 'monk';
+var db = monk('localhost:27017/gym')
+
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
+
+app.get('/programs', function(req, res) {
+  var collection = db.get('programs');
+  collection.find({}, {}, function(e, docs) {
+    res.json(docs);
+  });
+});
 
 if (isDeveloping) {
   const compiler = webpack(config);
