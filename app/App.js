@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, MenuItem } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
 require('./styles/style.sass');
@@ -11,13 +12,14 @@ export default class App extends Component {
         <Navbar staticTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Gym Diary</a>
+              <Link to="/">Gym Diary</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
               <NavItem eventKey={1} href="#">Login</NavItem>
+              <li><Link to="programs">Programs</Link></li>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
