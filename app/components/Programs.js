@@ -20,8 +20,8 @@ export default class Programs extends Component {
 								  <td>3.1.2016</td>
 								</tr>
 								<tr>
-								  <td>Eve</td>
-								  <td>Jackson</td>
+								  <td>Starting strength</td>
+								  <td>13.9.2015</td>
 								</tr>
 							</tbody>
 						</table> 
