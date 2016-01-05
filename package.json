@@ -29,7 +29,7 @@
     "bootstrap": "^3.3.6",
     "history": "^1.17.0",
     "jquery": "^2.1.4",
-    "mongodb": "^2.1.2",
+    "mongodb": "^1.4.39",
     "monk": "^1.0.1",
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.1",
