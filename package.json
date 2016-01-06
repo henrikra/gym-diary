@@ -21,11 +21,13 @@
   "scripts": {
     "test": "",
     "start": "babel-node server",
+    "backend": "nodemon server.js --exec babel-node --presets es2015,stage-2",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs ."
   },
   "dependencies": {
+    "body-parser": "^1.14.2",
     "bootstrap": "^3.3.6",
     "history": "^1.17.0",
     "jquery": "^2.1.4",
