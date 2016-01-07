@@ -12,25 +12,23 @@ export default class Programs extends Component {
 			});
 		});
 	}
-  addNew() {
-    var self = this;
-    var name = self.refs.programName.value;
-    var data = {"name": name};
+  addNew = () => {
+    var data = {name: this.refs.programName.value};
     //Ajax post to save new program
-      var ajax = $.ajax({
-          type: "post",
-          url: '/addprogram',
-          data: data
-      });
-      ajax.done(response => {
-          self.setState({
-              programs: response
-          });
-          self.refs.programName.value = "";
-      });
-      ajax.fail(response => {
-          console.log("Error.", response);
-      });
+    $.ajax({
+        type: 'post',
+        url: '/addprogram',
+        data: data
+    })
+    .done(response => {
+        this.setState({
+            programs: response
+        });
+        this.refs.programName.value = '';
+    })
+    .fail(response => {
+        console.log("Error.", response);
+    });
   }
   render() {
     var programs = this.state.programs.map(function(program) {
@@ -60,7 +58,7 @@ export default class Programs extends Component {
             <div>
               <input ref="programName" type="text" placeholder="Enter program name..."></input>
             </div>
-            <button onClick={this.addNew.bind(this)}>Add new Program</button>
+            <button onClick={this.addNew}>Add new Program</button>
           </div>
         </div>
       </div>
