@@ -18,7 +18,8 @@ export default class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">Login</NavItem>
+              <li><Link to="login">Login</Link></li>
+              <li><Link to="register">Register</Link></li>
               <li><Link to="programs">Programs</Link></li>
             </Nav>
           </Navbar.Collapse>
