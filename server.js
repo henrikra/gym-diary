@@ -35,18 +35,17 @@ app.post('/addprogram', function(req, res) {
   var collection = db.get('programs');
   // Submit to the DB
   collection.insert({
-    "name" : program
-  }, function (err, doc) {
+    name: program
+  }, function(err, doc) {
     if (err) {
+      console.log(err);
       // failed, return error
-      res.send("There was a problem adding the information to the database.");
+      return res.status(500).send();
     }
-    else {
-      // success, return all programs
-      collection.find({}, {}, function(e, docs) {
-        res.json(docs);
-      });
-    }
+    // success, return all programs
+    collection.find({}, {}, function(e, docs) {
+      res.json(docs);
+    });
   });
 });
 
