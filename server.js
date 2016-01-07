@@ -21,10 +21,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+app.post('/register', function(req, res) {
+  var email = req.body.email;
+  var password = req.body.password;
+  var passwordRepeat = req.body.passwordRepeat;
+
+  var collection = db.get('trainers');
+  collection.insert({
+    email: email,
+    password: password
+  }, function(err, doc) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send();
+    }
+    res.json(doc);
+  });
+});
+
 //Get all programs.
 app.get('/programs', function(req, res) {
   var collection = db.get('programs');
-  collection.find({}, {}, function(e, docs) {
+  collection.find({}, function(e, docs) {
     res.json(docs);
   });
 });
@@ -43,7 +61,7 @@ app.post('/addprogram', function(req, res) {
       return res.status(500).send();
     }
     // success, return all programs
-    collection.find({}, {}, function(e, docs) {
+    collection.find({}, function(e, docs) {
       res.json(docs);
     });
   });
