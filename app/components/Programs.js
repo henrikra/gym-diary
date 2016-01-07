@@ -55,10 +55,13 @@ export default class Programs extends Component {
                 {programs}
               </tbody>
             </table>
-            <div>
-              <input ref="programName" type="text" placeholder="Enter program name..."></input>
+            
+            <div className="input-group">
+              <input className="form-control" ref="programName" type="text" placeholder="Add new program..." />
+              <span className="input-group-btn">
+                <button className="btn" onClick={this.addNew}>Add</button>
+              </span>
             </div>
-            <button onClick={this.addNew}>Add new Program</button>
           </div>
         </div>
       </div>
