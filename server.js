@@ -33,9 +33,26 @@ app.post('/register', function(req, res) {
   }, function(err, doc) {
     if (err) {
       console.log(err);
-      return res.status(500).send();
+      return res.status(500).send(err);
     }
     res.json(doc);
+  });
+});
+
+app.post('/login', function(req, res) {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  var collection = db.get('trainers');
+  collection.findOne({email: email, password: password}, function(err, doc) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (!doc) {
+      return res.status(404).send('trainer-not-found');
+    }
+    res.status(200).send(doc);
   });
 });
 
@@ -58,7 +75,7 @@ app.post('/addprogram', function(req, res) {
     if (err) {
       console.log(err);
       // failed, return error
-      return res.status(500).send();
+      return res.status(500).send(err);
     }
     // success, return all programs
     collection.find({}, function(e, docs) {
