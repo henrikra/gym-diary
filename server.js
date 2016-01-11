@@ -66,6 +66,11 @@ app.get('/programs', function(req, res) {
 //Insert a program.
 app.post('/addprogram', function(req, res) {
   var program = req.body.name;
+  //Same simple validation as on the front-end.
+  if (!/^[a-zA-Z0-9 ]+$/.test(program) || program === '') {
+    console.log("Invalid input.");
+    return;
+  }
   // Set our internal DB variable
   var collection = db.get('programs');
   // Submit to the DB
