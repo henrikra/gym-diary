@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Glyphicon } from 'react-bootstrap';
+import React from 'react';
+import { Glyphicon } from 'react-bootstrap';
 
 const Home = function() {
 	return (
@@ -45,6 +45,6 @@ const Home = function() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Home;

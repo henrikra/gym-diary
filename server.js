@@ -44,26 +44,23 @@ apiRoutes.post('/register', function(req, res) {
 });
 
 apiRoutes.post('/authenticate', (req, res) => {
-  let { email, password } = req.body
+  let { email, password } = req.body;
 
   var collection = db.get('trainers');
 
   collection.findOne({ email }, (err, user) => {
-
-    if (err) throw err
+    if (err) throw err;
 
     if (!user) {
-      res.json({ success: false, message: 'User not found.' })
+      res.json({ success: false, message: 'User not found.' });
     } else if (user) {
-
       // check if password matches
       if (user.password !== password) {
-        res.json({ success: false, message: 'Wrong password.' })
+        res.json({ success: false, message: 'Wrong password.' });
       } else {
-
         let token = jwt.sign(user, app.get('superSecret'), {
           expiresInMinutes: 1440 // expires in 24 hours
-        })
+        });
 
         res.json({
           success: true,
@@ -77,19 +74,19 @@ apiRoutes.post('/authenticate', (req, res) => {
 });
 
 
-//Get all programs.
+// Get all programs.
 apiRoutes.get('/programs', function(req, res) {
   var collection = db.get('programs');
   collection.find({}, function(e, docs) {
     res.json(docs);
   });
 });
-//Insert a program.
+// Insert a program.
 apiRoutes.post('/addprogram', function(req, res) {
   var program = req.body.name;
-  //Same simple validation as on the front-end.
+  // Same simple validation as on the front-end.
   if (!/^[a-zA-Z0-9 ]+$/.test(program) || program === '' || (((program).trim()).length) === 0 ) {
-    console.log("Invalid input.");
+    console.log('Invalid input.');
     return;
   }
   // Set our internal DB variable

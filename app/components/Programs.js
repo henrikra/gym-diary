@@ -5,7 +5,7 @@ export default class Programs extends Component {
 	state = {
 		programs: []
 	}
-	componentDidMount(){
+	componentDidMount() {
 		$.get('/api/programs', (results) => {
 			this.setState({
 				programs: results
@@ -15,35 +15,35 @@ export default class Programs extends Component {
   addNew = () => {
     var data = {name: this.refs.programName.value};
 
-    //Don't allow empty or invalid input, set borderColor accordingly.
+    // Don't allow empty or invalid input, set borderColor accordingly.
     if (!/^[a-zA-Z0-9 ]+$/.test(this.refs.programName.value) || this.refs.programName.value === '' || (((this.refs.programName.value).trim()).length) === 0 ) {
-      console.log("Invalid input.");
-      document.getElementById("newProgram").style.borderColor = "red";
+      console.log('Invalid input.');
+      document.getElementById('newProgram').style.borderColor = 'red';
       return;
     }
-    //Reset borderColor, input not empty.
-    document.getElementById("newProgram").style.borderColor = "#CCC";
-    //Ajax post to save new program
+    // Reset borderColor, input not empty.
+    document.getElementById('newProgram').style.borderColor = '#CCC';
+    // Ajax post to save new program
     $.ajax({
-        type: 'post',
-        url: '/api/addprogram',
-        data: data
+      type: 'post',
+      url: '/api/addprogram',
+      data: data
     })
     .done(response => {
-        this.setState({
-            programs: response
-        });
-        this.refs.programName.value = '';
+      this.setState({
+        programs: response
+      });
+      this.refs.programName.value = '';
     })
     .fail(response => {
-        console.log("Error.", response);
+        console.log('Error.', response);
     });
   }
   render() {
     var programs = this.state.programs.map(function(program) {
       return (
         <tr key={program._id}>
-          <td><a href={"/#/programs/"+program._id}>{program.name}</a></td>
+          <td><a href={'/#/programs/' + program._id}>{program.name}</a></td>
           <td>3.1.2016</td>
         </tr>
       );

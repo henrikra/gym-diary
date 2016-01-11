@@ -8,13 +8,13 @@ import Login from './components/Login';
 import Register from './components/Register';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
-import auth from './auth'
+import auth from './auth';
 
-let requireAuth = (nextState, replaceState) => {
+const requireAuth = (nextState, replaceState) => {
   if (!auth.loggedIn()) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/login')
+    replaceState({ nextPathname: nextState.location.pathname }, '/login');
   }
-}
+};
 
 ReactDOM.render(
 	<Router history={browserHistory}>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import auth from '../auth';
 
 export default class Login extends Component {
@@ -12,7 +11,7 @@ export default class Login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		}, (loggedIn) => {
-			if(loggedIn.user) {
+			if (loggedIn.user) {
 				this.props.history.push('/');
 			}
 		});
