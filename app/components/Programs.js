@@ -6,7 +6,7 @@ export default class Programs extends Component {
 		programs: []
 	}
 	componentDidMount(){
-		$.get('/programs', (results) => {
+		$.get('/api/programs', (results) => {
 			this.setState({
 				programs: results
 			});
@@ -17,7 +17,7 @@ export default class Programs extends Component {
     //Ajax post to save new program
     $.ajax({
         type: 'post',
-        url: '/addprogram',
+        url: '/api/addprogram',
         data: data
     })
     .done(response => {

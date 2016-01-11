@@ -6,6 +6,7 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
 import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
 
 import mongo from 'mongodb';
 import monk from 'monk';
@@ -14,6 +15,9 @@ var db = monk('localhost:27017/gym');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
+const apiRoutes = express.Router();
+
+app.set('superSecret', 'ilovegoingtothegym');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.post('/register', function(req, res) {
+apiRoutes.post('/register', function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
   var passwordRepeat = req.body.passwordRepeat;
@@ -39,32 +43,49 @@ app.post('/register', function(req, res) {
   });
 });
 
-app.post('/login', function(req, res) {
-  var email = req.body.email;
-  var password = req.body.password;
+apiRoutes.post('/authenticate', (req, res) => {
+  let { email, password } = req.body
 
   var collection = db.get('trainers');
-  collection.findOne({email: email, password: password}, function(err, doc) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send(err);
+
+  collection.findOne({ email }, (err, user) => {
+
+    if (err) throw err
+
+    if (!user) {
+      res.json({ success: false, message: 'User not found.' })
+    } else if (user) {
+
+      // check if password matches
+      if (user.password !== password) {
+        res.json({ success: false, message: 'Wrong password.' })
+      } else {
+
+        let token = jwt.sign(user, app.get('superSecret'), {
+          expiresInMinutes: 1440 // expires in 24 hours
+        })
+
+        res.json({
+          success: true,
+          message: 'Enjoy your token!',
+          token,
+          user
+        });
+      }
     }
-    if (!doc) {
-      return res.status(404).send('trainer-not-found');
-    }
-    res.status(200).send(doc);
   });
 });
 
+
 //Get all programs.
-app.get('/programs', function(req, res) {
+apiRoutes.get('/programs', function(req, res) {
   var collection = db.get('programs');
   collection.find({}, function(e, docs) {
     res.json(docs);
   });
 });
 //Insert a program.
-app.post('/addprogram', function(req, res) {
+apiRoutes.post('/addprogram', function(req, res) {
   var program = req.body.name;
   // Set our internal DB variable
   var collection = db.get('programs');
@@ -83,6 +104,8 @@ app.post('/addprogram', function(req, res) {
     });
   });
 });
+
+app.use('/api', apiRoutes);
 
 if (isDeveloping) {
   const compiler = webpack(config);

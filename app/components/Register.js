@@ -9,7 +9,7 @@ export default class Register extends Component {
 	}
 	handleSubmit = () => {
 		$.ajax({
-			url: '/register',
+			url: '/api/register',
 			dataType: 'json',
 			type: 'POST',
 			data: {

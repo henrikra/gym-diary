@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import auth from '../auth';
 
 export default class Login extends Component {
 	state = {
@@ -7,19 +8,12 @@ export default class Login extends Component {
 		password: ''
 	}
 	handleSubmit = () => {
-		$.ajax({
-			url: '/login',
-			dataType: 'json',
-			type: 'POST',
-			data: {
-				email: this.state.email,
-				password: this.state.password
-			},
-			success: (data) => {
+		auth.login({
+			email: this.state.email,
+			password: this.state.password
+		}, (loggedIn) => {
+			if(loggedIn.user) {
 				this.props.history.push('/');
-			},
-			error: function(data) {
-				console.log(data);
 			}
 		});
 	}
