@@ -17,7 +17,7 @@ export default class App extends Component {
     if (auth.loggedIn()) {
       navLinks.push(<li><Link to="programs">Programs</Link></li>);
       navLinks.push(
-        <NavDropdown eventKey={3} title={auth.getUserEmail()}>
+        <NavDropdown eventKey={3} title={auth.getUserEmail()} id="user-dropdown">
           <MenuItem onClick={this.logout}>Logout</MenuItem>
         </NavDropdown>
       );
