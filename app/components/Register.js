@@ -10,14 +10,20 @@ export default class Register extends Component {
 		errorMsg: ''
 	}
 	handleSubmit = () => {
+		let email = this.state.email.trim();
+		let password = this.state.password.trim();
+		let passwordRepeat = this.state.passwordRepeat.trim();
+		if (!email || !password || !passwordRepeat) {
+			return this.setState({errorMsg: 'Please fill all fields'});
+		}
 		$.ajax({
 			url: '/api/register',
 			dataType: 'json',
 			type: 'POST',
 			data: {
-				email: this.state.email,
-				password: this.state.password,
-				passwordRepeat: this.state.passwordRepeat
+				email: email,
+				password: password,
+				passwordRepeat: passwordRepeat
 			},
 			success: (res) => {
 				if (res.success) {
