@@ -26,9 +26,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 apiRoutes.post('/register', function(req, res) {
-  var email = req.body.email;
-  var password = req.body.password;
-  var passwordRepeat = req.body.passwordRepeat;
+  let { email, password, passwordRepeat } = req.body;
+
+  if (password != passwordRepeat) {
+    return res.json({
+      success: false,
+      message: 'Passwords don\'t match'
+    });
+  }
 
   var collection = db.get('trainers');
   collection.insert({
@@ -39,7 +44,10 @@ apiRoutes.post('/register', function(req, res) {
       console.log(err);
       return res.status(500).send(err);
     }
-    res.json(doc);
+    res.json({
+      success: true,
+      doc: doc
+    });
   });
 });
 

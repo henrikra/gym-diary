@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import { Alert } from 'react-bootstrap';
 
 export default class Register extends Component {
 	state = {
 		email: '',
 		password: '',
-		passwordRepeat: ''
+		passwordRepeat: '',
+		errorMsg: ''
 	}
 	handleSubmit = () => {
 		$.ajax({
@@ -17,8 +19,13 @@ export default class Register extends Component {
 				password: this.state.password,
 				passwordRepeat: this.state.passwordRepeat
 			},
-			success: (data) => {
-				this.props.history.push('/');
+			success: (res) => {
+				if (res.success) {
+					this.props.history.push('/');
+				} else {
+					this.setState({errorMsg: res.message});
+				}
+				
 			},
 			error: function(data) {
 				console.log(data);
@@ -38,6 +45,9 @@ export default class Register extends Component {
 						<div className="col-md-6 col-md-push-3 col-sm-8 col-sm-push-2">
 							<div className="card-block">
 								<h3>Register</h3>
+								{this.state.errorMsg && (
+									<Alert bsStyle="danger">{this.state.errorMsg}</Alert>
+								)}
 								<form onSubmit={this.handleSubmit}>
 								  <div className="form-group">
 								    <label htmlFor="email">Email</label>
