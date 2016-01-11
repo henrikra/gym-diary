@@ -67,7 +67,7 @@ app.get('/programs', function(req, res) {
 app.post('/addprogram', function(req, res) {
   var program = req.body.name;
   //Same simple validation as on the front-end.
-  if (!/^[a-zA-Z0-9 ]+$/.test(program) || program === '') {
+  if (!/^[a-zA-Z0-9 ]+$/.test(program) || program === '' || (((program).trim()).length) === 0 ) {
     console.log("Invalid input.");
     return;
   }

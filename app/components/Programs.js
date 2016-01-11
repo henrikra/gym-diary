@@ -16,7 +16,7 @@ export default class Programs extends Component {
     var data = {name: this.refs.programName.value};
 
     //Don't allow empty or invalid input, set borderColor accordingly.
-    if (!/^[a-zA-Z0-9 ]+$/.test(this.refs.programName.value) || this.refs.programName.value === '') {
+    if (!/^[a-zA-Z0-9 ]+$/.test(this.refs.programName.value) || this.refs.programName.value === '' || (((this.refs.programName.value).trim()).length) === 0 ) {
       console.log("Invalid input.");
       document.getElementById("newProgram").style.borderColor = "red";
       return;
