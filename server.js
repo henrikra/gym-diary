@@ -83,36 +83,45 @@ apiRoutes.post('/authenticate', (req, res) => {
 
 
 // Get all programs.
-apiRoutes.get('/programs', function(req, res) {
-  var collection = db.get('programs');
-  collection.find({}, function(e, docs) {
-    res.json(docs);
+apiRoutes.get('/programs/:trainerId', function(req, res) {
+  let { trainerId } = req.params;
+  var collection = db.get('trainers');
+  collection.findById(trainerId, function(e, doc) {
+    res.json(doc);
   });
 });
 // Insert a program.
 apiRoutes.post('/addprogram', function(req, res) {
-  var program = req.body.name;
+  let { trainerId, program } = req.body;
   // Same simple validation as on the front-end.
   if (!/^[a-zA-Z0-9 ]+$/.test(program) || program === '' || (((program).trim()).length) === 0 ) {
     console.log('Invalid input.');
     return;
   }
   // Set our internal DB variable
-  var collection = db.get('programs');
+  var collection = db.get('trainers');
   // Submit to the DB
-  collection.insert({
-    name: program
-  }, function(err, doc) {
-    if (err) {
-      console.log(err);
-      // failed, return error
-      return res.status(500).send(err);
+  collection.update(
+    { _id: trainerId },
+    { 
+      $push: {
+        programs: {
+          name: program
+        }
+      }
+    },
+    function(err, doc) {
+      if (err) {
+        console.log(err);
+        // failed, return error
+        return res.status(500).send(err);
+      }
+      // success, return all programs
+      collection.findById(trainerId, function(e, docs) {
+        res.json(docs);
+      });
     }
-    // success, return all programs
-    collection.find({}, function(e, docs) {
-      res.json(docs);
-    });
-  });
+  );
 });
 
 app.use('/api', apiRoutes);

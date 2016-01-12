@@ -44,4 +44,8 @@ export default {
   getUserEmail() {
     return localStorage.userEmail;
   },
+
+  getUserId() {
+    return localStorage.userId;
+  }
 };
