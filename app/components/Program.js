@@ -5,7 +5,11 @@ export default class Program extends Component {
 	render() {
 		return (
 			<div className="container">
-        <p>Detailed program information here.</p>
+				<div className="main-content">
+	        <div className="card-block">
+		        <h3>*Program name here*</h3>
+        	</div>
+        </div>
       </div>
 		);
 	}
