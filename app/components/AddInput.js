@@ -7,7 +7,7 @@ export default class AddInput extends Component {
 	}
 	validate = () => {
 		// Don't allow empty or invalid input, set borderColor accordingly.
-    if (!/^[a-zA-Z0-9 ]+$/.test(this.state.inputText) || this.state.inputText === '' || (((this.state.inputText).trim()).length) === 0 ) {
+    if (!/^[a-zA-Z0-9 ]+$/.test(this.state.inputText) || !this.state.inputText.trim() ) {
       console.log('Invalid input.');
       this.setState({error: true});
       return;
