@@ -6,9 +6,15 @@ import Programs from './components/Programs';
 import Program from './components/Program';
 import Login from './components/Login';
 import Register from './components/Register';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 
 import auth from './auth';
+
+import createHistory from 'history/lib/createHashHistory';
+
+let history = createHistory({
+  queryKey: false
+});
 
 const requireAuth = (nextState, replaceState) => {
   if (!auth.loggedIn()) {
@@ -17,7 +23,7 @@ const requireAuth = (nextState, replaceState) => {
 };
 
 ReactDOM.render(
-	<Router history={browserHistory}>
+	<Router history={history}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="programs" component={Programs} onEnter={requireAuth} />
