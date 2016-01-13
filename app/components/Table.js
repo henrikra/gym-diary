@@ -6,10 +6,10 @@ export default class Table extends Component {
 		let headers = this.props.headers.map(function(header) {
 			return <th>{header}</th>;
 		});
-		let dataRows = this.props.data.map(function(dataRow) {
+		let dataRows = this.props.data.map(dataRow => {
 			return (
 				<tr>
-          <td><Link to={`/programs/${dataRow._id}`} query={{programName: dataRow.name}}>{dataRow.name}</Link></td>
+          <td><Link to={`/${this.props.linkTo}/${dataRow._id}`} query={{name: dataRow.name}}>{dataRow.name}</Link></td>
           <td>3.1.2016</td>
         </tr>
 			);

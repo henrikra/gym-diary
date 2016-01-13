@@ -40,17 +40,20 @@ export default class Programs extends Component {
   }
   render() {
     return (
-        <div className="container">
-          <div className="main-content">
-            <div className="card-block">
-              <h3>Your Programs</h3>
-              <AddInput
-                placeholder="Add new program..."
-                onSubmit={this.addNew} />
-              <Table headers={['Program', 'Last workout']} data={this.state.programs} />
-            </div>
+      <div className="container">
+        <div className="main-content">
+          <div className="card-block">
+            <h3>Your Programs</h3>
+            <AddInput
+              placeholder="Add new program..."
+              onSubmit={this.addNew} />
+            <Table
+              headers={['Program', 'Last workout']}
+              data={this.state.programs}
+              linkTo="programs" />
           </div>
         </div>
+      </div>
     );
   }
 }

@@ -41,11 +41,14 @@ export default class Program extends Component {
 			<div className="container">
 				<div className="main-content">
 	        <div className="card-block">
-		        <h3>{this.props.location.query.programName}</h3>
+		        <h3>{this.props.location.query.name}</h3>
 		        <AddInput
               placeholder="Add new exercise..."
               onSubmit={this.addNew} />
-            <Table headers={['Exercise', 'Last workout']} data={this.state.exercises} />
+            <Table
+              headers={['Exercise', 'Last workout']}
+              data={this.state.exercises}
+              linkTo="exercises" />
         	</div>
         </div>
       </div>
