@@ -27,7 +27,7 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="programs" component={Programs} onEnter={requireAuth} />
-      <Route path="programs/:id" component={Program} />
+      <Route path="programs/:programId" component={Program} />
       <Route path="login" component={Login} />
       <Route path="register" component={Register} />
     </Route>

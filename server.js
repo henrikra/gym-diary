@@ -85,11 +85,21 @@ apiRoutes.post('/authenticate', (req, res) => {
 // Get all programs.
 apiRoutes.get('/programs/:trainerId', function(req, res) {
   let { trainerId } = req.params;
-  var collection = db.get('trainers');
-  collection.findById(trainerId, function(e, doc) {
-    res.json(doc);
+  var collection = db.get('programs');
+  collection.find({trainer_id: trainerId}, function(e, docs) {
+    res.json(docs);
   });
 });
+
+apiRoutes.get('/exercises/:programId', function(req, res) {
+  let { programId } = req.params;
+  var collection = db.get('exercises');
+  collection.find({program_id: programId}, function(e, docs) {
+    res.json(docs);
+  });
+});
+
+
 // Insert a program.
 apiRoutes.post('/addprogram', function(req, res) {
   let { trainerId, program } = req.body;
@@ -98,17 +108,13 @@ apiRoutes.post('/addprogram', function(req, res) {
     console.log('Invalid input.');
     return;
   }
-  // Set our internal DB variable
-  var collection = db.get('trainers');
+
+  var collection = db.get('programs');
   // Submit to the DB
-  collection.update(
-    { _id: trainerId },
-    { 
-      $push: {
-        programs: {
-          name: program
-        }
-      }
+  collection.insert(
+    {
+      name: program,
+      trainer_id: trainerId
     },
     function(err, doc) {
       if (err) {
@@ -117,7 +123,31 @@ apiRoutes.post('/addprogram', function(req, res) {
         return res.status(500).send(err);
       }
       // success, return all programs
-      collection.findById(trainerId, function(e, docs) {
+      collection.find({trainer_id: trainerId}, function(e, docs) {
+        res.json(docs);
+      });
+    }
+  );
+});
+
+apiRoutes.post('/addexercise', function(req, res) {
+  let { programId, exerciseName } = req.body;
+  // Set our internal DB variable
+  var collection = db.get('exercises');
+  // Submit to the DB
+  collection.insert(
+    {
+      name: exerciseName,
+      program_id: programId
+    },
+    function(err, doc) {
+      if (err) {
+        console.log(err);
+        // failed, return error
+        return res.status(500).send(err);
+      }
+      // success, return all programs
+      collection.find({program_id: programId}, function(e, docs) {
         res.json(docs);
       });
     }
