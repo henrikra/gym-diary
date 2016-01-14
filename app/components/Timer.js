@@ -8,17 +8,19 @@ export default class Timer extends Component {
     timerRunning: false
   }
   setInitialTime = (event) => {
-    this.setState({selectedSeconds: event.target.options[event.target.selectedIndex].value});
-    this.setState({secondsRemaining: event.target.options[event.target.selectedIndex].value});
+    if (!this.state.timerRunning) {
+    this.setState({
+      	selectedSeconds: event.target.options[event.target.selectedIndex].value,
+      	secondsRemaining: event.target.options[event.target.selectedIndex].value
+    });
+    }
   }
   startCoundown = () => {
     console.log("Start, timer state: ", this.state.timerRunning);
-    if(!(this.state.timerRunning)) {
+    if(!this.state.timerRunning) {
       console.log("Timer state false, set to true.");
       this.setState({timerRunning: true});
       this.interval = setInterval(this.tick, 1000);
-    } else {
-      console.log("Timer already running.");
     }
   }
   tick = () => {
@@ -30,7 +32,7 @@ export default class Timer extends Component {
   }
 	render = () => {
     let button;
-    if(!(this.state.timerRunning)) {
+    if(!this.state.timerRunning) {
       button = <Button block onClick={this.startCoundown}>Start</Button>;
     } else {
       button = <Button block disabled>{this.state.secondsRemaining}</Button>;
