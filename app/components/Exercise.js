@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
-import { Tabs, Tab, Accordion, Panel, Input, Button } from 'react-bootstrap';
+import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon } from 'react-bootstrap';
 import $ from 'jquery';
 import moment from 'moment';
 
@@ -106,8 +106,8 @@ export default class Exercise extends Component {
                   {results}
                 </Accordion>
               </Tab>
-              <Tab eventKey={3} title="Timer">
-              <Timer></Timer>
+              <Tab eventKey={3} title={<Glyphicon glyph="time" />}>
+                <Timer />
               </Tab>
             </Tabs>
           </div>

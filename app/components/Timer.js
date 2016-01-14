@@ -39,7 +39,7 @@ export default class Timer extends Component {
 			  <div className="container">
           <div>
             <p>Stop slacking! Time your breaks!</p>
-              <Input label="Countdown from" type="select" value={this.state.selectedSeconds} onChange={this.setInitialTime}>
+              <Input type="select" value={this.state.selectedSeconds} onChange={this.setInitialTime}>
                 <option value="60">60 seconds</option>
                 <option value="120">120 seconds</option>
                 <option value="180">180 seconds</option>
