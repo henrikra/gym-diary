@@ -154,6 +154,43 @@ apiRoutes.post('/addexercise', function(req, res) {
   );
 });
 
+apiRoutes.post('/addresult', function(req, res) {
+  let { exerciseId, results } = req.body;
+  let collection = db.get('results');
+  collection.insert(
+    {
+      exercise_id: exerciseId,
+      date: new Date(),
+      sets: JSON.parse(results)
+    },
+    function(err, doc) {
+      if (err) {
+        console.log(err);
+        // failed, return error
+        return res.status(500).send(err);
+      }
+      collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
+        res.json({
+          success: true,
+          docs: docs
+        })
+      });
+    }
+  );
+});
+
+apiRoutes.get('/results', function(req, res) {
+  let { exerciseId } = req.query;
+
+  let collection = db.get('results');
+  collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
+    res.json({
+      success: true,
+      docs: docs
+    })
+  });
+});
+
 app.use('/api', apiRoutes);
 
 if (isDeveloping) {
