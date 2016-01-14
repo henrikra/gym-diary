@@ -11,7 +11,10 @@ export default class Exercise extends Component {
   }
   componentDidMount() {
     $.get('/api/results', {exerciseId: this.props.params.exerciseId}, res => {
-      this.setState({results: res.docs});
+      this.setState({
+        results: res.docs,
+        setCount: res.docs[0].sets.length
+      });
     });
   }
   setCountChange = (event) => {
@@ -92,7 +95,7 @@ export default class Exercise extends Component {
             <h3>{this.props.location.query.name}</h3>
             <Tabs defaultActiveKey={1} animation={false} justified>
               <Tab eventKey={1} title="Current">
-                <Input label="Sets" type="select" onChange={this.setCountChange}>
+                <Input label="Sets" type="select" value={this.state.setCount} onChange={this.setCountChange}>
                   <option value="3">3</option>
                   <option value="4">4</option>
                 </Input>
