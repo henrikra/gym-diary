@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import { Alert } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 
 export default class Register extends Component {
 	state = {
@@ -67,7 +67,7 @@ export default class Register extends Component {
 								    <label htmlFor="passwordRepeat">Repeat password</label>
 								    <input value={this.state.passwordRepeat} onChange={this.handleInputChange}  type="password" className="form-control" id="passwordRepeat" placeholder="Repeat password" />
 								  </div>
-								  <button type="submit" className="btn">Register</button>
+								  <Button type="submit">Register</Button>
 								</form>
 							</div>
 						</div>

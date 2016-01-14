@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import auth from '../auth';
-import { Alert } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 
 export default class Login extends Component {
 	state = {
@@ -46,7 +46,7 @@ export default class Login extends Component {
 								    <label htmlFor="password">Password</label>
 								    <input onChange={this.handleInputChange} type="password" className="form-control" id="password" placeholder="Password" />
 								  </div>
-								  <button type="submit" className="btn">Login</button>
+								  <Button type="submit">Login</Button>
 								</form>
 							</div>
 						</div>
