@@ -101,7 +101,7 @@ export default class Exercise extends Component {
                 </Accordion>
                 <Button block onClick={this.addResults}>Add results</Button>
               </Tab>
-              <Tab eventKey={2} title="Previous results">
+              <Tab eventKey={2} title="Results">
                 <Accordion>
                   {results}
                 </Accordion>
