@@ -79,8 +79,6 @@ export default class Exercise extends Component {
               addonAfter="reps"
               options={[5, 6, 7, 8, 9, 10]}
               ref={`reps${i}`}  />
-
-            <Button block onClick={this.acceptSet}>Done</Button>
           </form>
         </Panel>
       );
@@ -89,7 +87,11 @@ export default class Exercise extends Component {
       let counter = 0;
       return result.sets.map(function(set) {
         counter++;
-        return <div key={counter}>{counter}. {set.reps} x {set.weights}kg</div>;
+        return (
+          <div className="result-row" key={counter}>
+            <span className="result-row--counter">{counter}.</span> {set.reps} x {set.weights}kg
+          </div>
+        );
       });
     });
     let counter = 0;
