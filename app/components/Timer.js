@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'react-bootstrap';
+import { Input, Button, ProgressBar } from 'react-bootstrap';
 
 export default class Timer extends Component {
   state = {
@@ -31,11 +31,12 @@ export default class Timer extends Component {
     }
   }
 	render = () => {
-    let button;
+    let button, progressBar;
     if(!this.state.timerRunning) {
       button = <Button block onClick={this.startCoundown}>Start</Button>;
     } else {
       button = <Button block disabled>{this.state.secondsRemaining}</Button>;
+      progressBar = <ProgressBar max={this.state.selectedSeconds} now={this.state.secondsRemaining} label={this.state.secondsRemaining}></ProgressBar>;
     }
 		return (
       <div>
@@ -46,6 +47,7 @@ export default class Timer extends Component {
             <option value="180">180 seconds</option>
           </Input>
           {button}
+           {progressBar}
       </div>
 		);
 	}
