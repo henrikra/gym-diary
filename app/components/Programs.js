@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import auth from '../auth';
-import Table from './Table';
-import AddInput from './AddInput'
+import AddInput from './AddInput';
+import List from './List';
 
 export default class Programs extends Component {
 	state = {
@@ -47,10 +47,7 @@ export default class Programs extends Component {
             <AddInput
               placeholder="Add new program..."
               onSubmit={this.addNew} />
-            <Table
-              headers={['Program', 'Last workout']}
-              data={this.state.programs}
-              linkTo="programs" />
+            <List data={this.state.programs} linkTo="programs" />
           </div>
         </div>
       </div>
