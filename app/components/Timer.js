@@ -34,8 +34,15 @@ export default class Timer extends Component {
     }
   }
 	render = () => {
-    let button, progressBar;
+    let button, progressBar, select;
     if(!this.state.timerRunning) {
+      select = (
+        <Input type="select" value={this.state.selectedSeconds} onChange={this.setInitialTime}>
+          <option value="60">60 seconds</option>
+          <option value="120">120 seconds</option>
+          <option value="180">180 seconds</option>
+        </Input>
+      );
       button = <Button block onClick={this.startCountdown}>Start Timer</Button>;
     } else {
       button = <Button block onClick={this.resetCountdown}>Stop Timer</Button>;
@@ -44,13 +51,11 @@ export default class Timer extends Component {
 		return (
       <div>
         <p>Stop slacking! Time your breaks!</p>
-          <Input type="select" value={this.state.selectedSeconds} onChange={this.setInitialTime}>
-            <option value="60">60 seconds</option>
-            <option value="120">120 seconds</option>
-            <option value="180">180 seconds</option>
-          </Input>
+          {select}
+          
+          {progressBar}
           {button}
-           {progressBar}
+          
       </div>
 		);
 	}
