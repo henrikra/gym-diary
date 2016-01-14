@@ -36,17 +36,15 @@ export default class Timer extends Component {
       button = <Button block disabled>{this.state.secondsRemaining}</Button>;
     }
 		return (
-			  <div className="container">
-          <div>
-            <p>Stop slacking! Time your breaks!</p>
-              <Input type="select" value={this.state.selectedSeconds} onChange={this.setInitialTime}>
-                <option value="60">60 seconds</option>
-                <option value="120">120 seconds</option>
-                <option value="180">180 seconds</option>
-              </Input>
-              {button}
-          </div>
-        </div>
+      <div>
+        <p>Stop slacking! Time your breaks!</p>
+          <Input type="select" value={this.state.selectedSeconds} onChange={this.setInitialTime}>
+            <option value="60">60 seconds</option>
+            <option value="120">120 seconds</option>
+            <option value="180">180 seconds</option>
+          </Input>
+          {button}
+      </div>
 		);
 	}
 }
