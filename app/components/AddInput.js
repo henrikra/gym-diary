@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 
 export default class AddInput extends Component {
 	state = {
@@ -31,7 +32,7 @@ export default class AddInput extends Component {
 			  value={this.state.inputText}
 			  onChange={this.handleChange} />
 			  <span className="input-group-btn">
-			    <button className="btn" onClick={this.validate}>Add</button>
+			    <Button onClick={this.validate}>Add</Button>
 			  </span>
 			</div>
 		);

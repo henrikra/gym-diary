@@ -1,4 +1,4 @@
-.btn
+.btn-default
 	background: transparent
 	color: $dark-text-color
 	padding: 7px 15px
@@ -10,4 +10,9 @@
 	&:hover, &:focus
 		border-color: $main-color
 		background: $main-color
+		color: #fff
+
+	&[disabled], &[disabled]:hover, &[disabled]:focus
+		background: darken($main-color, 5%)
+		border-color: darken($main-color, 5%)
 		color: #fff
