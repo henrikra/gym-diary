@@ -3,18 +3,26 @@ import Timer from './Timer';
 import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon } from 'react-bootstrap';
 import $ from 'jquery';
 import moment from 'moment';
+import Select from './Select';
 
 export default class Exercise extends Component {
   state = {
     setCount: 3,
-    results: []
+    results: [],
+    defaultReps: 10,
+    defaultWeights: 10
   }
   componentDidMount() {
     $.get('/api/results', {exerciseId: this.props.params.exerciseId}, res => {
-      this.setState({
-        results: res.docs,
-        setCount: res.docs[0].sets.length
-      });
+      if (res.docs.length) {
+        let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
+        this.setState({
+          results: res.docs,
+          setCount: res.docs[0].sets.length,
+          defaultReps: lastWorkoutSet.reps,
+          defaultWeights: lastWorkoutSet.weights
+        });
+      }      
     });
   }
   setCountChange = (event) => {
@@ -26,9 +34,9 @@ export default class Exercise extends Component {
     let reps = [];
     for (let ref in this.refs) {
       if (ref.includes('weights')) {
-        weights.push(this.refs[ref].getValue());
+        weights.push(this.refs[ref].refs.select.getValue());
       } else {
-        reps.push(this.refs[ref].getValue());
+        reps.push(this.refs[ref].refs.select.getValue());
       }
     }
     for (let i = 0; i < weights.length; i++) {
@@ -42,7 +50,12 @@ export default class Exercise extends Component {
       results: JSON.stringify(results)
     }
     $.post('/api/addresult', data, res => {
-      this.setState({results: res.docs});
+      let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
+      this.setState({
+        results: res.docs,
+        defaultReps: lastWorkoutSet.reps,
+        defaultWeights: lastWorkoutSet.weights
+      });
     });
   }
   acceptSet = () => {
@@ -53,20 +66,20 @@ export default class Exercise extends Component {
       sets.push(
         <Panel header={`Set #${i}`} eventKey={i}>
           <form>
-            <Input type="select" ref={`weights${i}`} addonAfter="kg">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-            </Input>
-            <Input type="select" ref={`rep${i}`} addonAfter="reps">
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </Input>
+            <Select
+              value={this.state.defaultWeights}
+              ref={`weights${i}`}
+              addonAfter="kg"
+              options={[5, 10, 15, 20, 25, 30]}
+              ref={`weights${i}`}  />
+
+            <Select
+              value={this.state.defaultReps}
+              ref={`rep${i}`}
+              addonAfter="reps"
+              options={[5, 6, 7, 8, 9, 10]}
+              ref={`reps${i}`}  />
+
             <Button block onClick={this.acceptSet}>Done</Button>
           </form>
         </Panel>
