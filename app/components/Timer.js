@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'react-bootstrap';
+import { Input, Button, ProgressBar } from 'react-bootstrap';
 
 export default class Timer extends Component {
   state = {
@@ -8,18 +8,23 @@ export default class Timer extends Component {
     timerRunning: false
   }
   setInitialTime = (event) => {
-    this.setState({selectedSeconds: event.target.options[event.target.selectedIndex].value});
-    this.setState({secondsRemaining: event.target.options[event.target.selectedIndex].value});
+    if (!this.state.timerRunning) {
+      this.setState({
+      	selectedSeconds: event.target.options[event.target.selectedIndex].value,
+      	secondsRemaining: event.target.options[event.target.selectedIndex].value
+    });
+    }
   }
-  startCoundown = () => {
-    console.log("Start, timer state: ", this.state.timerRunning);
-    if(!(this.state.timerRunning)) {
-      console.log("Timer state false, set to true.");
+  startCountdown = () => {
+    if(!this.state.timerRunning) {
       this.setState({timerRunning: true});
       this.interval = setInterval(this.tick, 1000);
-    } else {
-      console.log("Timer already running.");
     }
+  }
+  resetCountdown = () => {
+    clearInterval(this.interval);
+    this.setState({timerRunning: false, secondsRemaining: this.state.selectedSeconds});
+    this.startCountdown();
   }
   tick = () => {
     this.setState({secondsRemaining: this.state.secondsRemaining - 1});
@@ -29,11 +34,12 @@ export default class Timer extends Component {
     }
   }
 	render = () => {
-    let button;
-    if(!(this.state.timerRunning)) {
-      button = <Button block onClick={this.startCoundown}>Start</Button>;
+    let button, progressBar;
+    if(!this.state.timerRunning) {
+      button = <Button block onClick={this.startCountdown}>Start Timer</Button>;
     } else {
-      button = <Button block disabled>{this.state.secondsRemaining}</Button>;
+      button = <Button block onClick={this.resetCountdown}>Stop Timer</Button>;
+      progressBar = <ProgressBar max={this.state.selectedSeconds} now={this.state.secondsRemaining} label={this.state.secondsRemaining}></ProgressBar>;
     }
 		return (
       <div>
@@ -44,6 +50,7 @@ export default class Timer extends Component {
             <option value="180">180 seconds</option>
           </Input>
           {button}
+           {progressBar}
       </div>
 		);
 	}
