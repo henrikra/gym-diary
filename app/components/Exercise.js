@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Timer from './Timer';
 import { Tabs, Tab, Accordion, Panel, Input, Button } from 'react-bootstrap';
 
 export default class Exercise extends Component {
@@ -59,6 +60,9 @@ export default class Exercise extends Component {
                     lol3
                   </Panel>
                 </Accordion>
+              </Tab>
+              <Tab eventKey={3} title="Timer">
+              <Timer></Timer>
               </Tab>
             </Tabs>
           </div>
