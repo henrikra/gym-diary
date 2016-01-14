@@ -70,7 +70,7 @@ export default class Exercise extends Component {
               value={this.state.defaultWeights}
               ref={`weights${i}`}
               addonAfter="kg"
-              options={[5, 10, 15, 20, 25, 30]}
+              options={[0, 5, 10, 15, 20, 25, 30]}
               ref={`weights${i}`}  />
 
             <Select
@@ -87,9 +87,14 @@ export default class Exercise extends Component {
       let counter = 0;
       return result.sets.map(function(set) {
         counter++;
+        let weights;
+        if (set.weights != 0) {
+          weights = <span>{set.weights}kg</span>;
+        }
+        
         return (
           <div className="result-row" key={counter}>
-            <span className="result-row--counter">{counter}.</span> {set.reps} x {set.weights}kg
+            <span className="result-row--counter">{counter}.</span> {set.reps} x {weights}
           </div>
         );
       });
