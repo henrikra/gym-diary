@@ -73,14 +73,14 @@ export default class Exercise extends Component {
       let counter = 0;
       return result.sets.map(function(set) {
         counter++;
-        return <div>{counter}. {set.reps} x {set.weights}kg</div>;
+        return <div key={counter}>{counter}. {set.reps} x {set.weights}kg</div>;
       });
     });
     let counter = 0;
     let results = this.state.results.map(function(result) {
       counter++;
       return (
-        <Panel header={moment(result.date).format('D.M.YYYY')} eventKey={counter}>
+        <Panel header={moment(result.date).format('D.M.YYYY')} eventKey={counter} key={result._id}>
           {previousSets[counter - 1]}
         </Panel>
       );
