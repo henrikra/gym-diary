@@ -22,8 +22,15 @@ export default class Exercise extends Component {
           defaultReps: lastWorkoutSet.reps,
           defaultWeights: lastWorkoutSet.weights
         });
-      }      
+      }
     });
+  }
+  delExercise = () => {
+    if(window.confirm("Are you sure you want to delete this exercise?")) {
+    $.post('/api/rm_exercise ', {exerciseId: this.props.params.exerciseId}, res => {
+      //Do something useful here.
+    });
+    }
   }
   setCountChange = (event) => {
     this.setState({setCount: event.target.options[event.target.selectedIndex].value});
@@ -123,6 +130,7 @@ export default class Exercise extends Component {
                   {sets}
                 </Accordion>
                 <Button block onClick={this.addResults}>Add results</Button>
+                <Button block onClick={this.delExercise}>Delete this exercise?</Button>
               </Tab>
               <Tab eventKey={2} title="Results">
                 <Accordion>

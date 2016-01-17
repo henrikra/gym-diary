@@ -55,7 +55,7 @@ export default class App extends Component {
         </Navbar>
         {this.props.children}
         <footer className="footer">
-          <div className="container">Copyright Henrik</div>
+          <div className="container">Copyright Henrik & Erik</div>
         </footer>
       </div>
     );
