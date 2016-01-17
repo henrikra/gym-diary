@@ -44,12 +44,21 @@ module.exports = {
     }, {
       test: /\.json?$/,
       loader: 'json'
+    },{
+      test: /\.sass$/,
+      loader: 'style!css!sass'
     }, {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
+    }, {
+      test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.(png|jpg|jpeg|gif)$/,
+      loader: 'url-loader'
     }]
   },
   postcss: [
     require('autoprefixer')
-  ]
+  ],
+  sassLoader: {
+    indentedSyntax: true
+  }
 };
