@@ -13,7 +13,7 @@ export default class Select extends Component {
 	}
 	render = () => {
 		let options = this.props.options.map(function(option) {
-			return <option value={option}>{option}</option>
+			return <option value={option}>{option}</option>;
 		});
 		return (
 			<Input type="select" onChange={this.changeSelect} value={this.state.value} ref="select" addonAfter={this.props.addonAfter}>
