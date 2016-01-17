@@ -26,7 +26,7 @@ export default class Exercise extends Component {
     });
   }
   delExercise = () => {
-    if(window.confirm("Are you sure you want to delete this exercise?")) {
+    if(window.confirm("Are you sure you want to delete this exercise?\nAll of your results for this exercise will also be removed.")) {
     $.post('/api/rm_exercise ', {exerciseId: this.props.params.exerciseId}, res => {
       if(res.success) {
         this.props.history.goBack();
@@ -132,7 +132,7 @@ export default class Exercise extends Component {
                   {sets}
                 </Accordion>
                 <Button block onClick={this.addResults}>Add results</Button>
-                <Button block onClick={this.delExercise}>Delete this exercise?</Button>
+                <Button bsStyle="danger" block onClick={this.delExercise}>Delete this exercise?</Button>
               </Tab>
               <Tab eventKey={2} title="Results">
                 <Accordion>
