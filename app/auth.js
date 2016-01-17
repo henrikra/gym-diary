@@ -1,6 +1,6 @@
 export default {
   signup: async function (body, cb) {
-    let response = await fetch('http://localhost:3000/signup', {
+    let response = await fetch('/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -14,7 +14,7 @@ export default {
   },
 
   login: async function (body, cb) {
-    let response = await fetch('http://localhost:3000/api/authenticate', {
+    let response = await fetch('/api/authenticate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
