@@ -29,8 +29,7 @@ export default class Exercise extends Component {
     if(window.confirm("Are you sure you want to delete this exercise?")) {
     $.post('/api/rm_exercise ', {exerciseId: this.props.params.exerciseId}, res => {
       if(res.success) {
-        console.log(this.props.params.programId);
-        this.props.history.push('/programs/');
+        this.props.history.goBack();
       }
     });
     }
