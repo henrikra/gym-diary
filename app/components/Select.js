@@ -11,12 +11,14 @@ export default class Select extends Component {
 	changeSelect = (event) => {
 		this.setState({value: event.target.options[event.target.selectedIndex].value});
 	}
-	render = () => {
-		let options = this.props.options.map(function(option) {
-			return <option value={option}>{option}</option>;
-		});
+	render() {
+		let { min, max, increment } = this.props;
+		let options = [];
+		for (let i = min; i <= max; i += increment) {
+			options.push(<option value={i}>{i} {this.props.label}</option>);
+		}
 		return (
-			<Input type="select" onChange={this.changeSelect} value={this.state.value} ref="select" addonAfter={this.props.addonAfter}>
+			<Input type="select" onChange={this.changeSelect} value={this.state.value} ref="select">
         {options}
       </Input>
 		);

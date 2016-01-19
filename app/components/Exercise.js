@@ -67,9 +67,7 @@ export default class Exercise extends Component {
       });
     });
   }
-  acceptSet = () => {
-  }
-	render = () => {
+	render() {
     let sets = [];
     for (let i = 1; i <= this.state.setCount; i++) {
       sets.push(
@@ -77,17 +75,18 @@ export default class Exercise extends Component {
           <form>
             <Select
               value={this.state.defaultWeights}
+              min={0}
+              max={300}
+              increment={0.25}
               ref={`weights${i}`}
-              addonAfter="kg"
-              options={[0, 5, 10, 15, 20, 25, 30]}
-              ref={`weights${i}`}  />
-
+              label="kg" />
             <Select
               value={this.state.defaultReps}
-              ref={`rep${i}`}
-              addonAfter="reps"
-              options={[5, 6, 7, 8, 9, 10]}
-              ref={`reps${i}`}  />
+              min={0}
+              max={50}
+              increment={1}
+              ref={`reps${i}`}
+              label="reps" />
           </form>
         </Panel>
       );
