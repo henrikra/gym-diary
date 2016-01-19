@@ -10,7 +10,8 @@ export default class Exercise extends Component {
     setCount: 3,
     results: [],
     defaultReps: 10,
-    defaultWeights: 10
+    defaultWeights: 10,
+    activeTab: 1
   }
   componentDidMount() {
     $.get('/api/results', {exerciseId: this.props.params.exerciseId}, res => {
@@ -63,9 +64,13 @@ export default class Exercise extends Component {
       this.setState({
         results: res.docs,
         defaultReps: lastWorkoutSet.reps,
-        defaultWeights: lastWorkoutSet.weights
+        defaultWeights: lastWorkoutSet.weights,
+        activeTab: 2
       });
     });
+  }
+  changeTab = key => {
+    this.setState({activeTab: key});
   }
 	render() {
     let sets = [];
@@ -92,27 +97,22 @@ export default class Exercise extends Component {
       );
     }
     let previousSets = this.state.results.map(function(result) {
-      let counter = 0;
-      return result.sets.map(function(set) {
-        counter++;
+      return result.sets.map(function(set, i) {
         let weights;
         if (set.weights != 0) {
           weights = <span>{set.weights}kg</span>;
         }
-        
         return (
-          <div className="result-row" key={counter}>
-            <span className="result-row--counter">{counter}.</span> {set.reps} x {weights}
+          <div className="result-row" key={i + 1}>
+            <span className="result-row--counter">{i + 1}.</span> {set.reps} x {weights}
           </div>
         );
       });
     });
-    let counter = 0;
-    let results = this.state.results.map(function(result) {
-      counter++;
+    let results = this.state.results.map(function(result, i) {
       return (
-        <Panel header={moment(result.date).format('D.M.YYYY')} eventKey={counter} key={result._id}>
-          {previousSets[counter - 1]}
+        <Panel header={moment(result.date).format('D.M.YYYY')} eventKey={i + 1} key={result._id}>
+          {previousSets[i]}
         </Panel>
       );
     });
@@ -121,7 +121,7 @@ export default class Exercise extends Component {
         <div className="main-content">
           <div className="card-block">
             <h3>{this.props.location.query.name}</h3>
-            <Tabs defaultActiveKey={1} animation={false} justified>
+            <Tabs activeKey={this.state.activeTab} onSelect={this.changeTab} animation={false} justified>
               <Tab eventKey={1} title="Current">
                 <Input label="Sets" type="select" value={this.state.setCount} onChange={this.setCountChange}>
                   <option value="3">3</option>
