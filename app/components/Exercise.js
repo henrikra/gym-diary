@@ -4,6 +4,7 @@ import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon } from 'react-boo
 import $ from 'jquery';
 import moment from 'moment';
 import Select from './Select';
+import _ from 'lodash';
 
 export default class Exercise extends Component {
   state = {
@@ -39,26 +40,23 @@ export default class Exercise extends Component {
     this.setState({setCount: event.target.options[event.target.selectedIndex].value});
   }
   addResults = () => {
-    let results = [];
-    let weights = [];
-    let reps = [];
-    for (let ref in this.refs) {
-      if (ref.includes('weights')) {
-        weights.push(this.refs[ref].refs.select.getValue());
-      } else {
-        reps.push(this.refs[ref].refs.select.getValue());
-      }
-    }
-    for (let i = 0; i < weights.length; i++) {
-      results.push({
-        reps: reps[i],
-        weights: weights[i]
-      });
-    }
+    let isEven = (value, index) => index % 2 === 0
+
+    let weights = _.filter(_.values(this.refs), isEven);
+    let reps = _.reject(_.values(this.refs), isEven);
+
+    let results = _.map(_.zip(weights, reps), pair =>
+      ({
+        reps: pair[1].refs.select.getValue(),
+        weights: pair[0].refs.select.getValue()
+      })
+    );
+
     let data = {
       exerciseId: this.props.params.exerciseId,
       results: JSON.stringify(results)
     }
+
     $.post('/api/addresult', data, res => {
       let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
       this.setState({
