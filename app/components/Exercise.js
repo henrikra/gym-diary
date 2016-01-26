@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
-import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon } from 'react-bootstrap';
+import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon, DropdownButton, MenuItem } from 'react-bootstrap';
 import $ from 'jquery';
 import moment from 'moment';
 import Select from './Select';
@@ -12,7 +12,8 @@ export default class Exercise extends Component {
     results: [],
     defaultReps: 10,
     defaultWeights: 10,
-    activeTab: 1
+    activeTab: 1,
+    isLoading: false
   }
   componentDidMount() {
     $.get('/api/results', {exerciseId: this.props.params.exerciseId}, res => {
@@ -40,6 +41,7 @@ export default class Exercise extends Component {
     this.setState({setCount: event.target.options[event.target.selectedIndex].value});
   }
   addResults = () => {
+    this.setState({ isLoading: true });
     let isEven = (value, index) => index % 2 === 0
 
     let weights = _.filter(_.values(this.refs), isEven);
@@ -63,7 +65,8 @@ export default class Exercise extends Component {
         results: res.docs,
         defaultReps: lastWorkoutSet.reps,
         defaultWeights: lastWorkoutSet.weights,
-        activeTab: 2
+        activeTab: 2,
+        isLoading: false
       });
     });
   }
@@ -117,7 +120,12 @@ export default class Exercise extends Component {
 		return (
 			<div className="container">
         <div className="main-content">
-          <div className="card-block">
+          <div className="card-block exercise">
+            <div className="exercise--settings">
+              <DropdownButton title={<Glyphicon glyph="cog" />} noCaret pullRight id="exercise-settings">
+                <MenuItem eventKey="1" onClick={this.delExercise}>Delete</MenuItem>
+              </DropdownButton>
+            </div>
             <h3>{this.props.location.query.name}</h3>
             <Tabs activeKey={this.state.activeTab} onSelect={this.changeTab} animation={false} justified>
               <Tab eventKey={1} title="Current">
@@ -128,8 +136,9 @@ export default class Exercise extends Component {
                 <Accordion>
                   {sets}
                 </Accordion>
-                <Button block onClick={this.addResults}>Add results</Button>
-                <Button bsStyle="danger" block onClick={this.delExercise}>Delete this exercise?</Button>
+                <Button disabled={this.state.isLoading} block onClick={this.addResults}>
+                  {this.state.isLoading ? 'Loading...' : 'Add results'}
+                </Button>
               </Tab>
               <Tab eventKey={2} title="Results">
                 <Accordion>
