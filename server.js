@@ -13,7 +13,7 @@ import monk from 'monk';
 var db = monk('localhost:27017/gym');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
+const port = isDeveloping ? 3000 : 8080;
 const app = express();
 const apiRoutes = express.Router();
 
