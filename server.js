@@ -104,11 +104,11 @@ apiRoutes.get('/exercises/:programId', function(req, res) {
 apiRoutes.post('/addprogram', function(req, res) {
   let { trainerId, program } = req.body;
   // Same simple validation as on the front-end.
-  if (!/^[a-zA-Z0-9 ]+$/.test(program) || program.trim().length === 0 ) {
+  if (!/^[a-zA-Z0-9/åäöÅÄÖ -]+$/.test(program) || !program.trim() ) {
     console.log('Invalid input.');
+    this.setState({error: true});
     return;
   }
-
   var collection = db.get('programs');
   // Submit to the DB
   collection.insert(
