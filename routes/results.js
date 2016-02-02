@@ -26,7 +26,6 @@ export default function(router) {
 	    function(err, doc) {
 	      if (err) {
 	        console.log(err);
-	        // failed, return error
 	        return res.status(500).send(err);
 	      }
 	      collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
@@ -37,6 +36,20 @@ export default function(router) {
 	      });
 	    }
 	  );
+	});
+
+	router.delete('/:resultId', function(req, res) {
+	  const { resultId } = req.params;
+	  const collection = db.get('results');
+	  collection.remove({_id: resultId}, function(err) {
+	  	if (err) {
+	  		console.log(err);
+	  		return res.status(500).send(err);
+	  	}
+	    res.json({
+	      success: true
+	    });
+	  });
 	});
 }
 

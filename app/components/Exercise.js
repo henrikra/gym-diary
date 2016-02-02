@@ -16,6 +16,9 @@ export default class Exercise extends Component {
     isLoading: false
   }
   componentDidMount() {
+    this.getResults();
+  }
+  getResults = () => {
     $.get('/api/results', {exerciseId: this.props.params.exerciseId}, res => {
       if (res.docs.length) {
         let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
@@ -77,6 +80,17 @@ export default class Exercise extends Component {
   changeTab = key => {
     this.setState({activeTab: key});
   }
+  deleteResult = resultId => {
+    if (!window.confirm('Are you sure you want to delete this result?'))
+      return;
+    $.ajax({
+      type: 'delete',
+      url: '/api/results/' + resultId
+    })
+    .done(res => {
+      this.getResults();
+    });
+  }
 	render() {
     let sets = [];
     for (let i = 1; i <= this.state.setCount; i++) {
@@ -114,10 +128,11 @@ export default class Exercise extends Component {
         );
       });
     });
-    let results = this.state.results.map(function(result, i) {
+    const results = this.state.results.map((result, i) => {
       return (
         <Panel header={moment(result.date).format('D.M.YYYY')} eventKey={i + 1} key={result._id}>
           {previousSets[i]}
+          <Button bsStyle="danger" bsSize="xsmall" onClick={this.deleteResult.bind(this, result._id)}>Delete</Button>
         </Panel>
       );
     });
