@@ -14,7 +14,7 @@ export default {
   },
 
   login: async function (body, cb) {
-    let response = await fetch('/api/authenticate', {
+    let response = await fetch('/api/trainers/authenticate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)

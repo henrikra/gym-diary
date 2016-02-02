@@ -17,7 +17,7 @@ export default class Register extends Component {
 			return this.setState({errorMsg: 'Please fill all fields'});
 		}
 		$.ajax({
-			url: '/api/register',
+			url: '/api/trainers/register',
 			dataType: 'json',
 			type: 'POST',
 			data: {
