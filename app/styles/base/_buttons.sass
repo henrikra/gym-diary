@@ -1,27 +1,31 @@
 .btn
-	background: transparent
-	color: $dark-text-color
+	background: $main-color
+	color: #fff
 	padding: 7px 15px
-	border: $border-width solid $main-color
+	border: 0
 	transition: all .3s ease-in-out
 	height: 40px
 	border-radius: 0
+	box-shadow: 0 3px 3px $shadow-color
 
 	&:hover, &:focus
-		border-color: $main-color
+		background: darken($main-color, 5%)
+		color: #fff
+
+	&:active, &:active:hover, &:active:focus
+		background: darken($main-color, 10%)
+		color: #fff
+		box-shadow: 0 4px 6px darken($shadow-color, 20%)
+
+	&[disabled], &[disabled]:hover, &[disabled]:focus
 		background: $main-color
 		color: #fff
 
-	&[disabled], &[disabled]:hover, &[disabled]:focus
-		background: darken($main-color, 5%)
-		border-color: darken($main-color, 5%)
-		color: #fff
-
 	&.btn-danger
-		border-color: red
+		background: $danger-red
 
 		&:hover, &:focus
-			background: red
+			background: darken($danger-red, 5%)
 
 	&.btn-xs
 		height: auto

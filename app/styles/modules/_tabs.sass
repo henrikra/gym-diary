@@ -3,14 +3,20 @@
 	width: 1%
 
 .nav-tabs.nav-justified > li > a
-	padding: 10px 8px
 	border-width: $border-width
+	border-left: 0
+	border-right: 0
 	border-radius: 0
-	border-bottom-color: #ddd
+
+	&:hover
+		border-color: transparent
 
 .nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:focus, .nav-tabs.nav-justified > .active > a:hover
+	border-color: #fff
+	border-left: 0
+	border-right: 0
 	border-width: $border-width
-	border-bottom-color: #FFF
+	border-bottom-color: $main-color
 
 .tab-content
 	padding: 10px 0
