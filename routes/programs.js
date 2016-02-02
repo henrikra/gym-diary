@@ -15,7 +15,7 @@ export default function(router) {
 	router.post('/', function(req, res) {
 	  let { trainerId, program } = req.body;
 	  // Same simple validation as on the front-end.
-	  if (!/^[a-zA-Z0-9 ]+$/.test(program) || program.trim().length === 0 ) {
+	  if (!/^[a-zA-Z0-9/åäöÅÄÖ -]+$/.test(program) || !program.trim()) {
 	    console.log('Invalid input.');
 	    return;
 	  }
