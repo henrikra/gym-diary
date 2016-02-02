@@ -83,19 +83,6 @@ apiRoutes.post('/authenticate', (req, res) => {
   });
 });
 
-apiRoutes.post('/rm_exercise', function(req, res) {
-  let { exerciseId } = req.body;
-
-  let collection = db.get('exercises');
-  collection.remove({_id: new mongo.ObjectID(exerciseId)}, function(err, docs){
-    res.json({
-      success: true,
-      docs: docs
-    });
-  });
-
-  return res;
-});
 app.use('/api', apiRoutes);
 
 if (isDeveloping) {

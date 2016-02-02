@@ -33,5 +33,18 @@ export default function(router) {
 	    }
 	  );
 	});
+
+	router.delete('/:exerciseId', function(req, res) {
+	  const { exerciseId } = req.params;
+	  const collection = db.get('exercises');
+	  collection.remove({_id: exerciseId}, function(err, docs){
+	    res.json({
+	      success: true,
+	      docs: docs
+	    });
+	  });
+
+	  return res;
+	});
 }
 

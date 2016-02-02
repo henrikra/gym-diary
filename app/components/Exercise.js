@@ -29,13 +29,17 @@ export default class Exercise extends Component {
     });
   }
   delExercise = () => {
-    if(window.confirm("Are you sure you want to delete this exercise?\nAll of your results for this exercise will also be removed.")) {
-    $.post('/api/rm_exercise ', {exerciseId: this.props.params.exerciseId}, res => {
+    if (!window.confirm('Are you sure you want to delete this exercise and all of its results?'))
+      return;
+    $.ajax({
+      type: 'delete',
+      url: '/api/exercises/' + this.props.params.exerciseId
+    })
+    .done(res => {
       if(res.success) {
         this.props.history.goBack();
       }
     });
-    }
   }
   setCountChange = (event) => {
     this.setState({setCount: event.target.options[event.target.selectedIndex].value});
