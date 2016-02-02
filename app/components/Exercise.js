@@ -59,7 +59,7 @@ export default class Exercise extends Component {
       results: JSON.stringify(results)
     }
 
-    $.post('/api/addresult', data, res => {
+    $.post('/api/results', data, res => {
       let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
       this.setState({
         results: res.docs,

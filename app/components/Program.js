@@ -24,7 +24,7 @@ export default class Program extends Component {
     // Ajax post to save new program
     $.ajax({
       type: 'post',
-      url: '/api/addexercise',
+      url: '/api/exercises',
       data: data
     })
     .done(res => {

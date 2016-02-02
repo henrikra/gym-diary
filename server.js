@@ -25,6 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+require('./routes/index')(app);
+
 apiRoutes.post('/register', function(req, res) {
   let { email, password, passwordRepeat } = req.body;
 
@@ -78,116 +80,6 @@ apiRoutes.post('/authenticate', (req, res) => {
         });
       }
     }
-  });
-});
-
-
-// Get all programs.
-apiRoutes.get('/programs/:trainerId', function(req, res) {
-  let { trainerId } = req.params;
-  var collection = db.get('programs');
-  collection.find({trainer_id: trainerId}, function(e, docs) {
-    res.json(docs);
-  });
-});
-
-apiRoutes.get('/exercises/:programId', function(req, res) {
-  let { programId } = req.params;
-  var collection = db.get('exercises');
-  collection.find({program_id: programId}, function(e, docs) {
-    res.json(docs);
-  });
-});
-
-
-// Insert a program.
-apiRoutes.post('/addprogram', function(req, res) {
-  let { trainerId, program } = req.body;
-  // Same simple validation as on the front-end.
-  if (!/^[a-zA-Z0-9 ]+$/.test(program) || program.trim().length === 0 ) {
-    console.log('Invalid input.');
-    return;
-  }
-
-  var collection = db.get('programs');
-  // Submit to the DB
-  collection.insert(
-    {
-      name: program,
-      trainer_id: trainerId
-    },
-    function(err, doc) {
-      if (err) {
-        console.log(err);
-        // failed, return error
-        return res.status(500).send(err);
-      }
-      // success, return all programs
-      collection.find({trainer_id: trainerId}, function(e, docs) {
-        res.json(docs);
-      });
-    }
-  );
-});
-
-apiRoutes.post('/addexercise', function(req, res) {
-  let { programId, exerciseName } = req.body;
-  // Set our internal DB variable
-  var collection = db.get('exercises');
-  // Submit to the DB
-  collection.insert(
-    {
-      name: exerciseName,
-      program_id: programId
-    },
-    function(err, doc) {
-      if (err) {
-        console.log(err);
-        // failed, return error
-        return res.status(500).send(err);
-      }
-      // success, return all programs
-      collection.find({program_id: programId}, function(e, docs) {
-        res.json(docs);
-      });
-    }
-  );
-});
-
-apiRoutes.post('/addresult', function(req, res) {
-  let { exerciseId, results } = req.body;
-  let collection = db.get('results');
-  collection.insert(
-    {
-      exercise_id: exerciseId,
-      date: new Date(),
-      sets: JSON.parse(results)
-    },
-    function(err, doc) {
-      if (err) {
-        console.log(err);
-        // failed, return error
-        return res.status(500).send(err);
-      }
-      collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
-        res.json({
-          success: true,
-          docs: docs
-        });
-      });
-    }
-  );
-});
-
-apiRoutes.get('/results', function(req, res) {
-  let { exerciseId } = req.query;
-
-  let collection = db.get('results');
-  collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
-    res.json({
-      success: true,
-      docs: docs
-    });
   });
 });
 
