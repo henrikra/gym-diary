@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // setup routes
-require('./routes/index')(app);
+require('./routes')(app);
 
 if (isDeveloping) {
   const compiler = webpack(config);
