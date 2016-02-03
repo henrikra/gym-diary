@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
-import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon, DropdownButton, MenuItem, Label } from 'react-bootstrap';
 import $ from 'jquery';
 import moment from 'moment';
 import Select from './Select';
@@ -13,7 +13,8 @@ export default class Exercise extends Component {
     defaultReps: 10,
     defaultWeights: 10,
     activeTab: 1,
-    isLoading: false
+    isLoading: false,
+      workoutDays: []
   }
   componentDidMount() {
     this.getResults();
@@ -77,6 +78,22 @@ export default class Exercise extends Component {
       });
     });
   }
+  addWorkoutDays = (event, eventKey) => {
+    !this.state.workoutDays.includes(eventKey) ? (this.saveWorkoutDays(eventKey)) : (this.removeWorkoutDays(eventKey));
+  }
+  saveWorkoutDays = (eventKey) => {
+    this.setState({workoutDays: this.state.workoutDays.concat([eventKey])});
+    console.log("Added ", eventKey);
+    //ajax post here
+  }
+  removeWorkoutDays = (eventKey) => {
+    const removed = [].filter.call(this.state.workoutDays, str => {
+      return str != eventKey;
+    });
+    this.setState({workoutDays: removed});
+    console.log("Removed ", eventKey);
+    //ajax del here
+  }
   changeTab = key => {
     this.setState({activeTab: key});
   }
@@ -136,11 +153,28 @@ export default class Exercise extends Component {
         </Panel>
       );
     });
+    const workoutdays = this.state.workoutDays.map((day) => {
+        return (
+                <Label bsStyle="success">
+                  {day}
+                </Label>
+        );
+    });
 		return (
 			<div className="container">
         <div className="main-content">
           <div className="card-block exercise">
             <div className="exercise--settings">
+            {workoutdays}
+            <DropdownButton onSelect={this.addWorkoutDays} title={<Glyphicon glyph="tags" />} noCaret pullRight id="exercise-settings">
+                <MenuItem eventKey="monday">Monday</MenuItem>
+                <MenuItem eventKey="tuesday">Tuesday</MenuItem>
+                <MenuItem eventKey="wednesday">Wednesday</MenuItem>
+                <MenuItem eventKey="thursday">Thursday</MenuItem>
+                <MenuItem eventKey="friday">Friday</MenuItem>
+                <MenuItem eventKey="saturday">Saturday</MenuItem>
+                <MenuItem eventKey="sunday">Sunday</MenuItem>
+              </DropdownButton>
               <DropdownButton title={<Glyphicon glyph="cog" />} noCaret pullRight id="exercise-settings">
                 <MenuItem eventKey="1" onClick={this.delExercise}>Delete</MenuItem>
               </DropdownButton>
