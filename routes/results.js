@@ -3,9 +3,9 @@ const db = monk('localhost:27017/gym');
 
 export default function(router) {
 	router.get('/', function(req, res) {
-	  let { exerciseId } = req.query;
+	  const { exerciseId } = req.query;
 
-	  let collection = db.get('results');
+	  const collection = db.get('results');
 	  collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
 	    res.json({
 	      success: true,
@@ -15,8 +15,8 @@ export default function(router) {
 	});
 
 	router.post('/', function(req, res) {
-	  let { exerciseId, results } = req.body;
-	  let collection = db.get('results');
+	  const { exerciseId, results } = req.body;
+	  const collection = db.get('results');
 	  collection.insert(
 	    {
 	      exercise_id: exerciseId,
@@ -28,11 +28,9 @@ export default function(router) {
 	        console.log(err);
 	        return res.status(500).send(err);
 	      }
-	      collection.find({exercise_id: exerciseId}, {sort: {date: -1}}, function(err, docs) {
-	        res.json({
-	          success: true,
-	          docs: docs
-	        });
+	      res.json({
+	      	success: true,
+	      	doc
 	      });
 	    }
 	  );

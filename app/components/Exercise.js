@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Timer from './Timer';
-import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon, DropdownButton, MenuItem, Label } from 'react-bootstrap';
+import { Tabs, Tab, Glyphicon, DropdownButton, MenuItem, Label } from 'react-bootstrap';
 import $ from 'jquery';
-import Select from './Select';
-import _ from 'lodash';
+import CurrentResults from './CurrentResults';
 import ResultsList from './ResultsList';
+import Timer from './Timer';
 
 export default class Exercise extends Component {
   state = {
@@ -52,37 +51,16 @@ export default class Exercise extends Component {
       }
     });
   }
-  setCountChange = (event) => {
-    this.setState({setCount: event.target.options[event.target.selectedIndex].value});
+  setCountChange = (newCount) => {
+    this.setState({setCount: newCount});
   }
-  addResults = () => {
-    this.setState({ isLoading: true });
-    const isEven = (value, index) => index % 2 === 0
-
-    const weights = _.filter(_.values(this.refs), isEven);
-    const reps = _.reject(_.values(this.refs), isEven);
-
-    const results = _.map(_.zip(weights, reps), pair =>
-      ({
-        reps: pair[1].refs.select.getValue(),
-        weights: pair[0].refs.select.getValue()
-      })
-    );
-
-    const data = {
-      exerciseId: this.props.params.exerciseId,
-      results: JSON.stringify(results)
-    }
-
+  addResults = (data) => {
     $.post('/api/results', data, res => {
-      const lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
       this.setState({
-        results: res.docs,
-        defaultReps: lastWorkoutSet.reps,
-        defaultWeights: lastWorkoutSet.weights,
         activeTab: 2,
         isLoading: false
       });
+      this.getResults()
     });
   }
   addWorkoutDays = (event, eventKey) => {
@@ -105,29 +83,6 @@ export default class Exercise extends Component {
     this.setState({activeTab: key});
   }
 	render() {
-    let sets = [];
-    for (let i = 1; i <= this.state.setCount; i++) {
-      sets.push(
-        <Panel header={`Set #${i}`} eventKey={i}>
-          <form>
-            <Select
-              value={this.state.defaultWeights}
-              min={0}
-              max={300}
-              increment={0.25}
-              ref={`weights${i}`}
-              label="kg" />
-            <Select
-              value={this.state.defaultReps}
-              min={0}
-              max={50}
-              increment={1}
-              ref={`reps${i}`}
-              label="reps" />
-          </form>
-        </Panel>
-      );
-    }
     const workoutdays = this.state.workoutDays.map((day) => {
       return (
         <Label bsStyle="success">
@@ -140,8 +95,8 @@ export default class Exercise extends Component {
         <div className="main-content">
           <div className="card-block exercise">
             <div className="exercise--settings">
-            {workoutdays}
-            <DropdownButton onSelect={this.addWorkoutDays} title={<Glyphicon glyph="tags" />} noCaret pullRight id="exercise-settings">
+              {workoutdays}
+              <DropdownButton onSelect={this.addWorkoutDays} title={<Glyphicon glyph="tags" />} noCaret pullRight id="exercise-settings">
                 <MenuItem eventKey="monday">Monday</MenuItem>
                 <MenuItem eventKey="tuesday">Tuesday</MenuItem>
                 <MenuItem eventKey="wednesday">Wednesday</MenuItem>
@@ -157,16 +112,14 @@ export default class Exercise extends Component {
             <h3>{this.props.location.query.name}</h3>
             <Tabs activeKey={this.state.activeTab} onSelect={this.changeTab} animation={false} justified>
               <Tab eventKey={1} title="Current">
-                <Input label="Sets" type="select" value={this.state.setCount} onChange={this.setCountChange}>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </Input>
-                <Accordion>
-                  {sets}
-                </Accordion>
-                <Button disabled={this.state.isLoading} block onClick={this.addResults}>
-                  {this.state.isLoading ? 'Loading...' : 'Add results'}
-                </Button>
+                <CurrentResults
+                  setCount={this.state.setCount}
+                  defaultWeights={this.state.defaultWeights}
+                  defaultReps={this.state.defaultReps}
+                  isLoading={this.state.isLoading}
+                  onAdd={this.addResults}
+                  exerciseId={this.props.params.exerciseId}
+                  onCountChange={this.setCountChange} />
               </Tab>
               <Tab eventKey={2} title="Results">
                 <ResultsList
