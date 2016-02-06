@@ -1,7 +1,7 @@
 import React from 'react';
 import { Glyphicon } from 'react-bootstrap';
 
-const Home = function() {
+const Home = () => {
 	return (
 		<div>
 			<header className="home-header">
@@ -30,7 +30,7 @@ const Home = function() {
 							<div className="feature">
 								<Glyphicon className="feature--icon" glyph="ok" />
 								<h3 className="feature--heading">Quick</h3>
-			<p className="feature--description">Easy and fast to use. Follow your programs and exercises with ease.</p>
+								<p className="feature--description">Easy and fast to use. Follow your programs and exercises with ease.</p>
 							</div>
 						</div>
 						<div className="col-sm-4">
