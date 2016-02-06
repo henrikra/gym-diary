@@ -19,17 +19,17 @@ export default class Navigation extends Component {
     this.setState({menuOpen: !this.state.menuOpen});
   }
 	render() {
-    const loggedInLinks = [
-      <li><Link to="programs" onClick={this.closeMenu}>Programs</Link></li>,
-      <NavDropdown eventKey={3} title={auth.getUserEmail()} id="user-dropdown">
-        <MenuItem onClick={this.logout}>Logout</MenuItem>
-      </NavDropdown>
-    ];
-    const notLoggedInLinks = [
-      <li><Link to="login" onClick={this.closeMenu}>Login</Link></li>,
-      <li><Link to="register" onClick={this.closeMenu}>Register</Link></li>
-    ];
-    const navLinks = auth.loggedIn() ? loggedInLinks : notLoggedInLinks;
+    const navLinks = auth.loggedIn() ?
+      [
+        <li><Link to="programs" onClick={this.closeMenu}>Programs</Link></li>,
+        <NavDropdown eventKey={3} title={auth.getUserEmail()} id="user-dropdown">
+          <MenuItem onClick={this.logout}>Logout</MenuItem>
+        </NavDropdown>
+      ] :
+      [
+        <li><Link to="login" onClick={this.closeMenu}>Login</Link></li>,
+        <li><Link to="register" onClick={this.closeMenu}>Register</Link></li>
+      ];
 		return (
 			<Navbar staticTop expanded={this.state.menuOpen} onToggle={this.handleToggle}>
         <Navbar.Header>
