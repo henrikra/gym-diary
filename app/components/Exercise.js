@@ -44,10 +44,10 @@ export default class Exercise extends Component {
       return;
     $.ajax({
       type: 'delete',
-      url: '/api/exercises/' + this.props.params.exerciseId
+      url: `/api/exercises/${this.props.params.exerciseId}`
     })
     .done(res => {
-      if(res.success) {
+      if (res.success) {
         this.props.history.goBack();
       }
     });
@@ -57,25 +57,25 @@ export default class Exercise extends Component {
   }
   addResults = () => {
     this.setState({ isLoading: true });
-    let isEven = (value, index) => index % 2 === 0
+    const isEven = (value, index) => index % 2 === 0
 
-    let weights = _.filter(_.values(this.refs), isEven);
-    let reps = _.reject(_.values(this.refs), isEven);
+    const weights = _.filter(_.values(this.refs), isEven);
+    const reps = _.reject(_.values(this.refs), isEven);
 
-    let results = _.map(_.zip(weights, reps), pair =>
+    const results = _.map(_.zip(weights, reps), pair =>
       ({
         reps: pair[1].refs.select.getValue(),
         weights: pair[0].refs.select.getValue()
       })
     );
 
-    let data = {
+    const data = {
       exerciseId: this.props.params.exerciseId,
       results: JSON.stringify(results)
     }
 
     $.post('/api/results', data, res => {
-      let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
+      const lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
       this.setState({
         results: res.docs,
         defaultReps: lastWorkoutSet.reps,
