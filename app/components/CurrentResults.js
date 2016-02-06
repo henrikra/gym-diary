@@ -31,7 +31,7 @@ export default class CurrentResults extends Component {
 		let sets = [];
     for (let i = 1; i <= setCount; i++) {
       sets.push(
-        <Panel header={`Set #${i}`} eventKey={i}>
+        <Panel key={i} header={`Set #${i}`} eventKey={i}>
           <form>
             <Select
               value={defaultWeights}
