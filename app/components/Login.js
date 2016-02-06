@@ -6,18 +6,17 @@ export default class Login extends Component {
 	state = {
 		email: '',
 		password: '',
-		errorMsg: ''
+		message: ''
 	}
 	handleSubmit = () => {
 		auth.login({
 			email: this.state.email,
 			password: this.state.password
-		}, (res) => {
-			console.log(res);
-			if (res.success) {
+		}, ({ success, message }) => {
+			if (success) {
 				this.props.history.push('/');
 			} else {
-				this.setState({errorMsg: res.message});
+				this.setState({ message });
 			}
 		});
 	}
@@ -34,8 +33,8 @@ export default class Login extends Component {
 						<div className="col-md-6 col-md-push-3 col-sm-8 col-sm-push-2">
 							<div className="card-block">
 								<h3>Login</h3>
-								{this.state.errorMsg && (
-									<Alert bsStyle="danger">{this.state.errorMsg}</Alert>
+								{this.state.message && (
+									<Alert bsStyle="danger">{this.state.message}</Alert>
 								)}
 								<form onSubmit={this.handleSubmit}>
 								  <div className="form-group">
