@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.js';
+import App from './components/App';
 import Home from './components/Home';
 import Programs from './components/Programs';
 import Program from './components/Program';
@@ -8,12 +8,11 @@ import Exercise from './components/Exercise';
 import Login from './components/Login';
 import Register from './components/Register';
 import { Router, Route, IndexRoute } from 'react-router';
+import createHistory from 'history/lib/createHashHistory';
 
 import auth from './auth';
 
-import createHistory from 'history/lib/createHashHistory';
-
-let history = createHistory({
+const history = createHistory({
   queryKey: false
 });
 
