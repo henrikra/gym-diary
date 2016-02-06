@@ -9,31 +9,26 @@ export default class Program extends Component {
 		exercises: []
 	}
 	componentDidMount = () => {
-		$.get(`/api/exercises/${this.props.params.programId}`, (res) => {
-			this.setState({
-				exercises: res
-			});
+		$.get(`/api/exercises/${this.props.params.programId}`, exercises => {
+			this.setState({ exercises });
 		});
 	}
 	addNew = (exerciseName) => {
-		var data = {
-      exerciseName: exerciseName,
+		const data = {
+      exerciseName,
       programId: this.props.params.programId
     };
-
     // Ajax post to save new program
     $.ajax({
       type: 'post',
       url: '/api/exercises',
-      data: data
+      data
     })
-    .done(res => {
-      this.setState({
-        exercises: res
-      });
+    .done(exercises => {
+      this.setState({ exercises });
     })
     .fail(res => {
-        console.log('Error.', res);
+      console.log('Error.', res);
     });
 	}
 	render() {
