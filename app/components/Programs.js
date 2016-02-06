@@ -9,33 +9,28 @@ export default class Programs extends Component {
 		programs: []
 	}
 	componentDidMount() {
-		$.get('/api/programs/' + auth.getUserId(), (res) => {
-      if (res) {
-  			this.setState({
-  				programs: res
-  			});
+		$.get('/api/programs/' + auth.getUserId(), ({ programs }) => {
+      if (programs) {
+  			this.setState({ programs });
       }
 		});
 	}
-  addNew = (programName) => {
-    var data = {
-      program: programName,
+  addNew = (program) => {
+    const data = {
+      program,
       trainerId: auth.getUserId()
     };
-
     // Ajax post to save new program
     $.ajax({
       type: 'post',
       url: '/api/programs',
-      data: data
+      data
     })
-    .done(res => {
-      this.setState({
-        programs: res
-      });
+    .done(programs => {
+      this.setState({ programs });
     })
     .fail(res => {
-        console.log('Error.', res);
+      console.log('Error.', res);
     });
   }
   render() {
