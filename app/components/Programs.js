@@ -9,7 +9,7 @@ export default class Programs extends Component {
 		programs: []
 	}
 	componentDidMount() {
-		$.get('/api/programs/' + auth.getUserId(), programs => {
+		$.get(`/api/programs/${auth.getUserId()}`, programs => {
       if (programs) {
   			this.setState({ programs });
       }
