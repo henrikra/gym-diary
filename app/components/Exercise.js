@@ -22,12 +22,19 @@ export default class Exercise extends Component {
   getResults = () => {
     $.get('/api/results', {exerciseId: this.props.params.exerciseId}, res => {
       if (res.docs.length) {
-        let lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
+        const lastWorkoutSet = res.docs[0].sets[res.docs[0].sets.length - 1];
         this.setState({
           results: res.docs,
           setCount: res.docs[0].sets.length,
           defaultReps: lastWorkoutSet.reps,
           defaultWeights: lastWorkoutSet.weights
+        });
+      } else {
+        this.setState({
+          results: res.docs,
+          setCount: 3,
+          defaultReps: 10,
+          defaultWeights: 10
         });
       }
     });
