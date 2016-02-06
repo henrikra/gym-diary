@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Timer from './Timer';
 import { Tabs, Tab, Accordion, Panel, Input, Button, Glyphicon, DropdownButton, MenuItem, Label } from 'react-bootstrap';
 import $ from 'jquery';
-import moment from 'moment';
 import Select from './Select';
 import _ from 'lodash';
+import ResultsList from './ResultsList';
 
 export default class Exercise extends Component {
   state = {
@@ -14,7 +14,7 @@ export default class Exercise extends Component {
     defaultWeights: 10,
     activeTab: 1,
     isLoading: false,
-      workoutDays: []
+    workoutDays: []
   }
   componentDidMount() {
     this.getResults();
@@ -97,17 +97,6 @@ export default class Exercise extends Component {
   changeTab = key => {
     this.setState({activeTab: key});
   }
-  deleteResult = resultId => {
-    if (!window.confirm('Are you sure you want to delete this result?'))
-      return;
-    $.ajax({
-      type: 'delete',
-      url: '/api/results/' + resultId
-    })
-    .done(res => {
-      this.getResults();
-    });
-  }
 	render() {
     let sets = [];
     for (let i = 1; i <= this.state.setCount; i++) {
@@ -132,33 +121,12 @@ export default class Exercise extends Component {
         </Panel>
       );
     }
-    let previousSets = this.state.results.map(function(result) {
-      return result.sets.map(function(set, i) {
-        let weights;
-        if (set.weights != 0) {
-          weights = <span>{set.weights}kg</span>;
-        }
-        return (
-          <div className="result-row" key={i + 1}>
-            <span className="result-row--counter">{i + 1}.</span> {set.reps} x {weights}
-          </div>
-        );
-      });
-    });
-    const results = this.state.results.map((result, i) => {
-      return (
-        <Panel header={moment(result.date).format('D.M.YYYY')} eventKey={i + 1} key={result._id}>
-          {previousSets[i]}
-          <Button bsStyle="danger" bsSize="xsmall" onClick={this.deleteResult.bind(this, result._id)}>Delete</Button>
-        </Panel>
-      );
-    });
     const workoutdays = this.state.workoutDays.map((day) => {
-        return (
-                <Label bsStyle="success">
-                  {day}
-                </Label>
-        );
+      return (
+        <Label bsStyle="success">
+          {day}
+        </Label>
+      );
     });
 		return (
 			<div className="container">
@@ -194,9 +162,9 @@ export default class Exercise extends Component {
                 </Button>
               </Tab>
               <Tab eventKey={2} title="Results">
-                <Accordion>
-                  {results}
-                </Accordion>
+                <ResultsList
+                  results={this.state.results}
+                  onDelete={this.getResults} />
               </Tab>
               <Tab eventKey={3} title={<Glyphicon glyph="time" />}>
                 <Timer />
