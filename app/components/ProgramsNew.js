@@ -3,11 +3,9 @@ import { reduxForm } from 'redux-form';
 import { Input, ButtonInput } from 'react-bootstrap';
 import { createProgram } from '../actions';
 import auth from '../auth';
+import InputField from './InputField';
 
 class ProgramsNew extends Component {
-	validationState(field) {
-		return field.touched && field.invalid ? 'error' : '';
-	}
 	onSubmit = (props) => {
 		this.props.createProgram(props)
 			.then(() => this.props.history.push('programs'));
@@ -20,12 +18,10 @@ class ProgramsNew extends Component {
           <div className="card-block">
             <h3>New program</h3>
             <form onSubmit={handleSubmit(this.onSubmit)}>
-            	<Input
+            	<InputField
 				        type="text"
 				        label="Name"
-				        help={name.touched ? name.error : ''}
-				        bsStyle={this.validationState(name)}
-				        {...name} />
+				        field={name} />
 				      <Input
 				       	type="hidden"
 				       	{...trainerId} />
