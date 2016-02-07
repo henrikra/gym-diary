@@ -28,7 +28,7 @@ export default class CurrentResults extends Component {
   }
 	render() {
 		const { setCount, defaultWeights, defaultReps, isLoading } = this.props;
-    const sets = _.map(_.range(1, setCount + 1), i =>
+    const sets = _.range(1, setCount + 1).map(i =>
       <Panel key={i} header={`Set #${i}`} eventKey={i}>
         <Select
           value={defaultWeights}
