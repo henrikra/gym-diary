@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchExercises, activateProgram } from '../actions';
 import List from './List';
-import { Link } from 'react-router';
+import SettingsCog from './SettingsCog';
 
 class Program extends Component {
 	componentWillMount = () => {
@@ -10,12 +10,13 @@ class Program extends Component {
     this.props.activateProgram(this.props.params.programId);
 	}
 	render() {
+		const cogItems = [{label: 'Add', onClick: () => this.props.history.push('exercises/new')}];
 		return (
 			<div className="container">
 				<div className="main-content">
 	        <div className="card-block">
 		        <h3>{this.props.location.query.name}</h3>
-            <Link to={'exercises/new'} className="btn btn-default">Add</Link>
+            <SettingsCog items={cogItems} />
             <List data={this.props.exercises} linkTo="exercises" />
         	</div>
         </div>

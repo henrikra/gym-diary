@@ -4,6 +4,7 @@ import $ from 'jquery';
 import CurrentResults from './CurrentResults';
 import ResultsList from './ResultsList';
 import Timer from './Timer';
+import SettingsCog from './SettingsCog';
 
 export default class Exercise extends Component {
   state = {
@@ -90,26 +91,23 @@ export default class Exercise extends Component {
         </Label>
       );
     });
+    const cogItems = [{label: 'Delete', onClick: this.delExercise}];
 		return (
 			<div className="container">
         <div className="main-content">
           <div className="card-block exercise">
-            <div className="exercise--settings">
-              {workoutdays}
-              <DropdownButton onSelect={this.addWorkoutDays} title={<Glyphicon glyph="tags" />} noCaret pullRight id="exercise-settings">
-                <MenuItem eventKey="monday">Monday</MenuItem>
-                <MenuItem eventKey="tuesday">Tuesday</MenuItem>
-                <MenuItem eventKey="wednesday">Wednesday</MenuItem>
-                <MenuItem eventKey="thursday">Thursday</MenuItem>
-                <MenuItem eventKey="friday">Friday</MenuItem>
-                <MenuItem eventKey="saturday">Saturday</MenuItem>
-                <MenuItem eventKey="sunday">Sunday</MenuItem>
-              </DropdownButton>
-              <DropdownButton title={<Glyphicon glyph="cog" />} noCaret pullRight id="exercise-settings">
-                <MenuItem eventKey="1" onClick={this.delExercise}>Delete</MenuItem>
-              </DropdownButton>
-            </div>
+            {workoutdays}
+            <DropdownButton onSelect={this.addWorkoutDays} title={<Glyphicon glyph="tags" />} noCaret pullRight id="exercise-settings">
+              <MenuItem eventKey="monday">Monday</MenuItem>
+              <MenuItem eventKey="tuesday">Tuesday</MenuItem>
+              <MenuItem eventKey="wednesday">Wednesday</MenuItem>
+              <MenuItem eventKey="thursday">Thursday</MenuItem>
+              <MenuItem eventKey="friday">Friday</MenuItem>
+              <MenuItem eventKey="saturday">Saturday</MenuItem>
+              <MenuItem eventKey="sunday">Sunday</MenuItem>
+            </DropdownButton>
             <h3>{this.props.location.query.name}</h3>
+            <SettingsCog items={cogItems} />
             <Tabs activeKey={this.state.activeTab} onSelect={this.changeTab} animation={false} justified>
               <Tab eventKey={1} title="Current">
                 <CurrentResults
