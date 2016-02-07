@@ -10,7 +10,7 @@ class ProgramsNew extends Component {
 			.then(() => this.props.history.push(`programs/${props.programId}`));
 	}
 	render() {
-		const { fields: { name, programId }, handleSubmit } = this.props;
+      const { fields: { name, programId, monday, tuesday, wednesday, thursday, friday, saturday, sunday }, handleSubmit } = this.props;
 		return (
 			<div className="container">
         <div className="main-content">
@@ -24,8 +24,15 @@ class ProgramsNew extends Component {
 				      <Input
 				      	type="hidden"
 				       	{...programId} />
-				      {/* TODO checkboxes with workout days */}
-				      <ButtonInput type="submit" value="Add exercise" block />
+				    {/* TODO checkboxes with workout days */}
+            <Input type="checkbox" label="Monday" {...monday}/>
+            <Input type="checkbox" label="Tuesday" {...tuesday}/>
+            <Input type="checkbox" label="Wednesday" {...wednesday}/>
+            <Input type="checkbox" label="Thursday" {...thursday}/>
+            <Input type="checkbox" label="Friday" {...friday}/>
+            <Input type="checkbox" label="Saturday" {...saturday}/>
+            <Input type="checkbox" label="Sunday" {...sunday}/>
+              <ButtonInput type="submit" value="Add exercise" block />
             </form>
           </div>
         </div>
@@ -52,6 +59,8 @@ function mapStateToProps(state) {
 
 export default reduxForm({
 	form: 'ExercisesNew',
-	fields: ['name', 'programId'],
+    fields: ['name', 'programId', 'monday',
+             'tuesday', 'wednesday', 'thursday',
+             'friday', 'saturday', 'sunday'],
 	validate
 }, mapStateToProps, { createExercise })(ProgramsNew);
