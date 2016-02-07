@@ -5,7 +5,7 @@ export default function(router) {
 	// Get all programs.
 	router.get('/:trainerId', function(req, res) {
 	  const { trainerId } = req.params;
-	  var collection = db.get('programs');
+	  const collection = db.get('programs');
 	  collection.find({trainer_id: trainerId}, function(e, docs) {
 	    res.json(docs);
 	  });
@@ -20,7 +20,7 @@ export default function(router) {
 	    return;
 	  }
 
-	  var collection = db.get('programs');
+	  const collection = db.get('programs');
 	  // Submit to the DB
 	  collection.insert(
 	    {
