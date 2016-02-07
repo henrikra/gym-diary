@@ -6,8 +6,8 @@ import auth from '../auth';
 import InputField from './InputField';
 
 class ProgramsNew extends Component {
-	onSubmit = (props) => {
-		this.props.createProgram(props)
+	onSubmit = (formData) => {
+		this.props.createProgram(formData)
 			.then(() => this.props.history.push('programs'));
 	}
 	render() {

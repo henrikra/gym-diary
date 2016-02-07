@@ -5,8 +5,8 @@ import { createExercise } from '../actions';
 import InputField from './InputField';
 
 class ProgramsNew extends Component {
-	onSubmit = (props) => {
-		this.props.createExercise(props)
+	onSubmit = (formData) => {
+		this.props.createExercise(formData)
 			.then(() => this.props.history.push(`programs/${props.programId}`));
 	}
 	render() {
