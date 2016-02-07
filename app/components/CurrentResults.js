@@ -24,45 +24,42 @@ export default class CurrentResults extends Component {
     this.props.onAdd(data);
   }
   setCountChange = (event) => {
-    this.props.onCountChange(event.target.options[event.target.selectedIndex].value);
+    this.props.onCountChange(parseInt(event.target.options[event.target.selectedIndex].value));
   }
 	render() {
 		const { setCount, defaultWeights, defaultReps, isLoading } = this.props;
-		let sets = [];
-    for (let i = 1; i <= setCount; i++) {
-      sets.push(
-        <Panel key={i} header={`Set #${i}`} eventKey={i}>
-          <form>
-            <Select
-              value={defaultWeights}
-              min={0}
-              max={300}
-              increment={0.25}
-              ref={`weights${i}`}
-              label="kg" />
-            <Select
-              value={defaultReps}
-              min={0}
-              max={50}
-              increment={1}
-              ref={`reps${i}`}
-              label="reps" />
-          </form>
-        </Panel>
-      );
-    }
+    const sets = _.map(_.range(1, setCount + 1), i =>
+      <Panel key={i} header={`Set #${i}`} eventKey={i}>
+        <Select
+          value={defaultWeights}
+          min={0}
+          max={300}
+          increment={0.25}
+          ref={`weights${i}`}
+          label="kg" />
+        <Select
+          value={defaultReps}
+          min={0}
+          max={50}
+          increment={1}
+          ref={`reps${i}`}
+          label="reps" />
+      </Panel>
+    );
 		return (
 			<div>
 				<Input label="Sets" type="select" value={setCount} onChange={this.setCountChange}>
 	        <option value="3">3</option>
 	        <option value="4">4</option>
 	      </Input>
-	      <Accordion>
-	        {sets}
-	      </Accordion>
-	      <Button disabled={isLoading} block onClick={(this.addResults)}>
-	        {isLoading ? 'Loading...' : 'Add results'}
-	      </Button>
+        <form onSubmit={this.addResults}>
+  	      <Accordion>
+  	        {sets}
+  	      </Accordion>
+  	      <Button disabled={isLoading} block type="submit">
+  	        {isLoading ? 'Loading...' : 'Add results'}
+  	      </Button>
+        </form>
       </div>
 		);
 	}
