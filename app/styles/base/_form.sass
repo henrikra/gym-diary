@@ -6,10 +6,13 @@
 
 	&:focus
 		box-shadow: none
-		border-color: $main-color
+		border-color: $main-color		
 
-	&.has-error
-		border-color: red
+.has-error
+	.control-label, .help-block
+		color: $danger-red
+	.form-control
+		border-color: $danger-red
 
 .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group
 	margin-left: (-$border-width)

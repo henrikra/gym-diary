@@ -15,7 +15,7 @@ class Programs extends Component {
         <div className="main-content">
           <div className="card-block">
             <h3>Your Programs</h3>
-            <Link to="programs/new">Add</Link>
+            <Link to="programs/new" className="btn btn-default">Add</Link>
             <List data={this.props.programs} linkTo="programs" />
           </div>
         </div>

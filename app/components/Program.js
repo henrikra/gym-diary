@@ -15,7 +15,7 @@ class Program extends Component {
 				<div className="main-content">
 	        <div className="card-block">
 		        <h3>{this.props.location.query.name}</h3>
-            <Link to={'exercises/new'}>Add</Link>
+            <Link to={'exercises/new'} className="btn btn-default">Add</Link>
             <List data={this.props.exercises} linkTo="exercises" />
         	</div>
         </div>
