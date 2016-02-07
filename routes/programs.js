@@ -33,9 +33,9 @@ export default function(router) {
 	        // failed, return error
 	        return res.status(500).send(err);
 	      }
-	      // success, return all programs
-	      collection.find({trainer_id: trainerId}, function(e, docs) {
-	        res.json(docs);
+	      res.json({
+	      	success: true,
+	      	doc
 	      });
 	    }
 	  );
