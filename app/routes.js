@@ -5,6 +5,7 @@ import App from './components/App';
 import Home from './components/Home';
 import Programs from './components/Programs';
 import Program from './components/Program';
+import ProgramsNew from './components/ProgramsNew';
 import Exercise from './components/Exercise';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -23,6 +24,7 @@ export default (
     <Route path="login" component={Login} />
     <Route path="register" component={Register} />
     <Route path="programs" component={Programs} onEnter={requireAuth} />
+    <Route path="programs/new" component={ProgramsNew} />
     <Route path="programs/:programId" component={Program} />
     <Route path="exercises/:exerciseId" component={Exercise} />
   </Route>

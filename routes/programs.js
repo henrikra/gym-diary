@@ -4,7 +4,7 @@ const db = monk('localhost:27017/gym');
 export default function(router) {
 	// Get all programs.
 	router.get('/:trainerId', function(req, res) {
-	  let { trainerId } = req.params;
+	  const { trainerId } = req.params;
 	  var collection = db.get('programs');
 	  collection.find({trainer_id: trainerId}, function(e, docs) {
 	    res.json(docs);
@@ -13,9 +13,9 @@ export default function(router) {
 
 	// Insert a program.
 	router.post('/', function(req, res) {
-	  let { trainerId, program } = req.body;
+	  const { trainerId, name } = req.body;
 	  // Same simple validation as on the front-end.
-	  if (!/^[a-zA-Z0-9/åäöÅÄÖ -]+$/.test(program) || !program.trim()) {
+	  if (!/^[a-zA-Z0-9/åäöÅÄÖ -]+$/.test(name) || !name.trim()) {
 	    console.log('Invalid input.');
 	    return;
 	  }
@@ -24,7 +24,7 @@ export default function(router) {
 	  // Submit to the DB
 	  collection.insert(
 	    {
-	      name: program,
+	      name,
 	      trainer_id: trainerId
 	    },
 	    function(err, doc) {
