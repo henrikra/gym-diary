@@ -28,6 +28,7 @@
     "jscs": "jscs ."
   },
   "dependencies": {
+    "axios": "^0.9.1",
     "body-parser": "^1.14.2",
     "bootstrap": "^3.3.6",
     "history": "^1.17.0",
@@ -40,7 +41,10 @@
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.1",
     "react-dom": "^0.14.3",
+    "react-redux": "^4.4.0",
     "react-router": "^1.0.3",
+    "redux": "^3.3.1",
+    "redux-promise": "^0.5.1",
     "require-dir": "^0.3.0"
   },
   "devDependencies": {

@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 import auth from '../auth';
 import AddInput from './AddInput';
 import List from './List';
+import { fetchPrograms } from '../actions';
 
-export default class Programs extends Component {
-	state = {
-		programs: []
-	}
+class Programs extends Component {
 	componentDidMount() {
-		$.get(`/api/programs/${auth.getUserId()}`, programs => {
-      if (programs) {
-  			this.setState({ programs });
-      }
-		});
+    this.props.fetchPrograms(auth.getUserId());
 	}
   addNew = (program) => {
     const data = {
@@ -42,10 +37,18 @@ export default class Programs extends Component {
             <AddInput
               placeholder="Add new program..."
               onSubmit={this.addNew} />
-            <List data={this.state.programs} linkTo="programs" />
+            <List data={this.props.programs} linkTo="programs" />
           </div>
         </div>
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    programs: state.programs.all
+  };
+}
+
+export default connect(mapStateToProps, { fetchPrograms })(Programs);
