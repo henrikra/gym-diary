@@ -12,12 +12,12 @@ export default function(router) {
 	});
 
   router.post('/', function(req, res) {
-      const { programId, name, ...days } = req.body;
-      const workoutDays = _.map(days, (value, prop) => {
-          return { [prop]:value };
-      });
-      const collection = db.get('exercises');
-      collection.insert(
+    const { programId, name, ...days } = req.body;
+    const workoutDays = _.map(days, (value, key) => {
+      return { [key]: value };
+    });
+    const collection = db.get('exercises');
+    collection.insert(
       {
         name,
         program_id: programId,
@@ -29,9 +29,9 @@ export default function(router) {
           // failed, return error
           return res.status(500).send(err);
         }
-        // success, return all programs
-        collection.find({program_id: programId}, function(e, docs) {
-          res.json(docs);
+        res.json({
+          success: true,
+          doc
         });
       }
     );
