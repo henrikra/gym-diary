@@ -6,7 +6,7 @@ import { fetchPrograms } from '../actions';
 import { Link } from 'react-router';
 
 class Programs extends Component {
-	componentDidMount() {
+	componentWillMount() {
     this.props.fetchPrograms(auth.getUserId());
 	}
   render() {

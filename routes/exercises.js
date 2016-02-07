@@ -11,13 +11,13 @@ export default function(router) {
 	});
 
 	router.post('/', function(req, res) {
-	  let { programId, exerciseName } = req.body;
+	  let { programId, name } = req.body;
 	  // Set our internal DB variable
-	  var collection = db.get('exercises');
+	  const collection = db.get('exercises');
 	  // Submit to the DB
 	  collection.insert(
 	    {
-	      name: exerciseName,
+	      name,
 	      program_id: programId
 	    },
 	    function(err, doc) {

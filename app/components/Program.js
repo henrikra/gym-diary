@@ -1,35 +1,13 @@
-
 import React, { Component } from 'react';
-import $ from 'jquery';
-import AddInput from './AddInput';
+import { connect } from 'react-redux';
+import { fetchExercises, activateProgram } from '../actions';
 import List from './List';
+import { Link } from 'react-router';
 
-export default class Program extends Component {
-	state = {
-		exercises: []
-	}
-	componentDidMount = () => {
-		$.get(`/api/exercises/${this.props.params.programId}`, exercises => {
-			this.setState({ exercises });
-		});
-	}
-	addNew = (exerciseName) => {
-		const data = {
-      exerciseName,
-      programId: this.props.params.programId
-    };
-    // Ajax post to save new program
-    $.ajax({
-      type: 'post',
-      url: '/api/exercises',
-      data
-    })
-    .done(exercises => {
-      this.setState({ exercises });
-    })
-    .fail(res => {
-      console.log('Error.', res);
-    });
+class Program extends Component {
+	componentWillMount = () => {
+    this.props.fetchExercises(this.props.params.programId);
+    this.props.activateProgram(this.props.params.programId);
 	}
 	render() {
 		return (
@@ -37,13 +15,19 @@ export default class Program extends Component {
 				<div className="main-content">
 	        <div className="card-block">
 		        <h3>{this.props.location.query.name}</h3>
-		        <AddInput
-              placeholder="Add new exercise..."
-              onSubmit={this.addNew} />
-            <List data={this.state.exercises} linkTo="exercises" />
+            <Link to={'exercises/new'}>Add</Link>
+            <List data={this.props.exercises} linkTo="exercises" />
         	</div>
         </div>
       </div>
 		);
 	}
 }
+
+function mapStateToProps(state) {
+  return {
+    exercises: state.exercises.all
+  }
+}
+
+export default connect(mapStateToProps, { fetchExercises, activateProgram })(Program);

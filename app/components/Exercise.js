@@ -15,7 +15,7 @@ export default class Exercise extends Component {
     isLoading: false,
     workoutDays: []
   }
-  componentDidMount() {
+  componentWillMount() {
     this.getResults();
   }
   getResults = () => {

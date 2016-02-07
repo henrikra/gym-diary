@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { Input, ButtonInput } from 'react-bootstrap';
-import { createProgram } from '../actions';
-import auth from '../auth';
+import { createExercise } from '../actions';
 
 class ProgramsNew extends Component {
 	validationState(field) {
 		return field.touched && field.invalid ? 'error' : '';
 	}
 	onSubmit = (props) => {
-		this.props.createProgram(props)
-			.then(() => this.props.history.push('programs'));
+		this.props.createExercise(props)
+			.then(() => this.props.history.push(`programs/${props.programId}`));
 	}
 	render() {
-		const { fields: { name, trainerId }, handleSubmit } = this.props;
+		const { fields: { name, programId }, handleSubmit } = this.props;
 		return (
 			<div className="container">
         <div className="main-content">
           <div className="card-block">
-            <h3>New program</h3>
+            <h3>New exercise</h3>
             <form onSubmit={handleSubmit(this.onSubmit)}>
             	<Input
 				        type="text"
@@ -27,9 +26,10 @@ class ProgramsNew extends Component {
 				        bsStyle={this.validationState(name)}
 				        {...name} />
 				      <Input
-				       	type="hidden"
-				       	{...trainerId} />
-				      <ButtonInput type="submit" value="Add program" block />
+				      	type="hidden"
+				       	{...programId} />
+				      {/* TODO checkboxes with workout days */}
+				      <ButtonInput type="submit" value="Add exercise" block />
             </form>
           </div>
         </div>
@@ -41,16 +41,21 @@ class ProgramsNew extends Component {
 function validate(values) {
 	const errors = {};
 	if (!values.name) {
-		errors.name = 'Enter program name';
+		errors.name = 'Enter exercise name';
 	}
 	return errors;
 }
 
+function mapStateToProps(state) {
+	return {
+		initialValues: {
+			programId: state.programs.active
+		}	
+	}
+}
+
 export default reduxForm({
-	form: 'ProgramsNew',
-	fields: ['name', 'trainerId'],
-	initialValues: {
-		trainerId: auth.getUserId()
-	},
+	form: 'ExercisesNew',
+	fields: ['name', 'programId'],
 	validate
-}, null, { createProgram })(ProgramsNew);
+}, mapStateToProps, { createExercise })(ProgramsNew);
