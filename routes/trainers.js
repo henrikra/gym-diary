@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 export default function(router, app) {
 	router.post('/register', function(req, res) {
-	  let { email, password, passwordRepeat } = req.body;
+	  const { email, password, passwordRepeat } = req.body;
 
 	  if (password != passwordRepeat) {
 	    return res.json({
@@ -13,7 +13,7 @@ export default function(router, app) {
 	    });
 	  }
 
-	  var collection = db.get('trainers');
+	  const collection = db.get('trainers');
 	  collection.insert({
 	    email: email,
 	    password: password
@@ -30,9 +30,9 @@ export default function(router, app) {
 	});
 
 	router.post('/authenticate', (req, res) => {
-	  let { email, password } = req.body;
+	  const { email, password } = req.body;
 
-	  var collection = db.get('trainers');
+	  const collection = db.get('trainers');
 
 	  collection.findOne({ email }, (err, user) => {
 	    if (err) throw err;
@@ -44,7 +44,7 @@ export default function(router, app) {
 	      if (user.password !== password) {
 	        res.json({ success: false, message: 'Wrong password' });
 	      } else {
-	        let token = jwt.sign(user, app.get('superSecret'), {
+	        const token = jwt.sign(user, app.get('superSecret'), {
 	          expiresInMinutes: 1440 // expires in 24 hours
 	        });
 
