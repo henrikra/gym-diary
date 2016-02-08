@@ -9,7 +9,8 @@ export default class Register extends Component {
 		passwordRepeat: '',
 		message: ''
 	}
-	handleSubmit = () => {
+	handleSubmit = event => {
+		event.preventDefault();
 		const email = this.state.email.trim();
 		const password = this.state.password.trim();
 		const passwordRepeat = this.state.passwordRepeat.trim();

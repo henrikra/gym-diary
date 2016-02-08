@@ -8,7 +8,8 @@ export default class Login extends Component {
 		password: '',
 		message: ''
 	}
-	handleSubmit = () => {
+	handleSubmit = event => {
+		event.preventDefault();
 		auth.login({
 			email: this.state.email,
 			password: this.state.password
