@@ -21,14 +21,14 @@ export default class Navigation extends Component {
 	render() {
     const navLinks = auth.loggedIn() ?
       [
-        <li><Link to="programs" onClick={this.closeMenu}>Programs</Link></li>,
-        <NavDropdown eventKey={3} title={auth.getUserEmail()} id="user-dropdown">
+        <li key="1"><Link to="programs" onClick={this.closeMenu}>Programs</Link></li>,
+        <NavDropdown key="2" eventKey={3} title={auth.getUserEmail()} id="user-dropdown">
           <MenuItem onClick={this.logout}>Logout</MenuItem>
         </NavDropdown>
       ] :
       [
-        <li><Link to="login" onClick={this.closeMenu}>Login</Link></li>,
-        <li><Link to="register" onClick={this.closeMenu}>Register</Link></li>
+        <li key="1"><Link to="login" onClick={this.closeMenu}>Login</Link></li>,
+        <li key="2"><Link to="register" onClick={this.closeMenu}>Register</Link></li>
       ];
 		return (
 			<Navbar staticTop expanded={this.state.menuOpen} onToggle={this.handleToggle}>
