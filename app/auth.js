@@ -19,10 +19,10 @@ export default {
   	axios.post('/api/trainers/authenticate', body)
   		.then(({ data: { success, message, token, user } }) => {
   			if (success) {
-		      localStorage.token = token;
-		      localStorage.userId = user._id;
-		      localStorage.userEmail = user.email;
-		      cb({ success, message, user });
+          sessionStorage.setItem('token', token);
+          sessionStorage.setItem('userId', user._id);
+          sessionStorage.setItem('userEmail', user.email);
+          cb({ success, message, user });
 		    } else {
 		      cb({ message });
 		    }
@@ -30,19 +30,19 @@ export default {
   },
 
   logout(cb) {
-    delete localStorage.token;
+    sessionStorage.removeItem('token');
     if (cb) cb();
   },
 
   loggedIn() {
-    return !!localStorage.token;
+    return !!sessionStorage.getItem('token');
   },
 
   getUserEmail() {
-    return localStorage.userEmail;
+    return sessionStorage.getItem('userEmail');
   },
 
   getUserId() {
-    return localStorage.userId;
+    return sessionStorage.getItem('userId');
   }
 };
