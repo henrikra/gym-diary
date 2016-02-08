@@ -31,6 +31,7 @@ export default {
 
   logout(cb) {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userId');
     if (cb) cb();
   },
 
