@@ -1,21 +1,21 @@
 import axios from 'axios';
 
 export default {
-  signup: async function (body, cb) {
-    let response = await fetch('/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
+  // signup: async function (body, cb) {
+  //   let response = await fetch('/signup', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(body)
+  //   });
 
-    let { success, message } = await response.json();
-    if (success) this.login(body, cb);
-    else cb({ success, message });
-  },
+  //   let { success, message } = await response.json();
+  //   if (success) this.login(body, cb);
+  //   else cb({ success, message });
+  // },
 
-  login: async function (body, cb) {
+  login: function (body, cb) {
   	axios.post('/api/trainers/authenticate', body)
   		.then(({ data: { success, message, token, user } }) => {
   			if (success) {
