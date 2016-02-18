@@ -34,6 +34,10 @@ if (isDeveloping) {
       chunks: false,
       chunkModules: false,
       modules: false
+    },
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
     }
   });
 
