@@ -4,3 +4,6 @@ dist
 *.log
 coverage
 .tern-port
+
+### Vagrant ###
+.vagrant/
